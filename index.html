@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fakerym</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { overflow:hidden; background:#000; font-family:"Palatino Linotype","Book Antiqua",Georgia,serif; color:#e8dcc0; }
+  canvas { display:block; }
+  #hud { position:fixed; inset:0; pointer-events:none; user-select:none; }
+
+  #crosshair { position:absolute; left:50%; top:50%; width:14px; height:14px; margin:-7px 0 0 -7px;
+    border:1px solid rgba(255,255,255,.55); border-radius:50%; box-shadow:0 0 4px #000; opacity:.7; }
+
+  .bars { position:absolute; bottom:26px; left:50%; transform:translateX(-50%); display:flex; gap:18px; align-items:flex-end; }
+  .bar { width:190px; height:9px; background:rgba(0,0,0,.55); border:1px solid rgba(200,180,140,.35); border-radius:5px; overflow:hidden; }
+  .bar > i { display:block; height:100%; width:100%; transition:width .12s linear; }
+  #hp  > i { background:linear-gradient(90deg,#7d1b1b,#c8402f); }
+  #stam> i { background:linear-gradient(90deg,#4b6320,#96c23a); }
+  #mag > i { background:linear-gradient(90deg,#1d3d6e,#4b9ce0); }
+
+  #compass { position:absolute; top:14px; left:50%; transform:translateX(-50%); width:420px; height:26px;
+    overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent); }
+  #compass .strip { position:absolute; top:0; left:0; height:26px; white-space:nowrap; font-size:13px; letter-spacing:2px; opacity:.8; }
+  #compass .tick { display:inline-block; width:60px; text-align:center; }
+
+  #stats { position:absolute; top:14px; left:18px; font-size:14px; line-height:1.7; text-shadow:0 1px 3px #000; opacity:.9; }
+  #stats b { color:#f0d896; font-weight:normal; }
+
+  #log { position:absolute; bottom:70px; left:18px; font-size:14px; text-shadow:0 1px 3px #000; }
+  #log div { opacity:0; animation:fade 4.5s forwards; }
+  @keyframes fade { 8%{opacity:1} 70%{opacity:1} 100%{opacity:0} }
+
+  #target { position:absolute; top:52px; left:50%; transform:translateX(-50%); text-align:center; font-size:15px;
+    text-shadow:0 1px 3px #000; opacity:0; transition:opacity .2s; }
+  #target .tbar { width:220px; height:5px; margin:4px auto 0; background:rgba(0,0,0,.6); border:1px solid rgba(200,180,140,.3); }
+  #target .tbar > i { display:block; height:100%; background:#c8402f; }
+
+  #damage { position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 45%, rgba(150,10,10,.75) 100%);
+    opacity:0; transition:opacity .35s; }
+
+  #menu { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:radial-gradient(ellipse at center, rgba(20,16,10,.7), rgba(0,0,0,.94)); text-align:center; cursor:pointer; }
+  #menu h1 { font-size:64px; letter-spacing:14px; font-weight:normal; color:#e6cf94; text-shadow:0 0 30px rgba(210,170,90,.35); }
+  #menu p  { margin-top:22px; opacity:.75; font-size:15px; line-height:2; }
+  #menu .k { color:#f0d896; }
+  #menu.hidden { display:none; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<div id="hud">
+  <div id="crosshair"></div>
+  <div id="compass"><div class="strip"></div></div>
+  <div id="stats"></div>
+  <div id="target"><span class="tname"></span><div class="tbar"><i></i></div></div>
+  <div id="log"></div>
+  <div class="bars">
+    <div class="bar" id="hp"><i></i></div>
+    <div class="bar" id="stam"><i></i></div>
+    <div class="bar" id="mag"><i></i></div>
+  </div>
+  <div id="damage"></div>
+</div>
+
+<div id="menu">
+  <h1>FAKERYM</h1>
+  <p>
+    <span class="k">WASD</span> move &nbsp;·&nbsp; <span class="k">Shift</span> sprint &nbsp;·&nbsp; <span class="k">Space</span> jump<br>
+    <span class="k">Left click</span> swing sword &nbsp;·&nbsp; <span class="k">Right click</span> cast flame<br>
+    <span class="k">E</span> loot &nbsp;·&nbsp; <span class="k">T</span> pass time &nbsp;·&nbsp; <span class="k">Esc</span> release mouse<br><br>
+    click to begin
+  </p>
+</div>
+
+<script type="module" src="./game.js"></script>
+</body>
+</html>
