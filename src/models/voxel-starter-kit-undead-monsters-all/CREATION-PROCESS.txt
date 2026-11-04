@@ -1,0 +1,3 @@
+Creation process
+
+AI coding assistants (OpenAI Codex; Anthropic Claude Code for the October 2026 style revision) assisted the Python/Blender construction scripts, model revisions, animation authoring, packaging and documentation. The supplied geometry and actions are procedural Blender constructions. The production process included owner-directed style revisions, agent visual review, sampled export/contact checks and engine imports. Preview images show actual exported assets. No gameplay AI service, API key, telemetry or online generation is required to use the assets.

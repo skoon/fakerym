@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { clone as cloneSkinned } from 'three/addons/utils/SkeletonUtils.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { WORLD, WATER } from '../core/config.js';
 import { scene } from '../core/renderer.js';
 import { heightAt, slopeAt, ringSpot, findSpot } from '../world/heightfield.js';
@@ -8,9 +10,11 @@ import { contractKilled } from './contracts.js';
 import { say, flashDamage } from '../ui/hud.js';
 
 // ---------------------------------------------------------------- enemies
-// Three creatures with three silhouettes: a low wide crab, a low long hound, a tall hunched
-// kagouti. They differ in geometry, not just tint — that is the whole point of this file's shape.
-// `aim` is where a hit lands (a crab is knee-high, a kagouti is shoulder-height above you).
+// Three creatures with three silhouettes, and the bodies are no longer built here: they are skinned
+// voxel models from the Monsters kit in `src/models/`. This file keeps the mapping from creature to
+// model and the mapping from behaviour to animation clip; nothing else knows the models exist.
+// `aim` is where a hit lands (a crab is knee-high, a kagouti is shoulder-height above you), and it
+// has to agree with the model, which is why `modelH` normalises each body to a known height.
 //
 // Temperament is data too, and once you are near them it is the whole difference between the three:
 //   wake    how close you must be before it notices you at all
@@ -22,15 +26,18 @@ import { say, flashDamage } from '../ui/hud.js';
 // 14 m from where it was. A nix-hound hunts in pairs, sees you from 38 m and harries. A kagouti
 // sees you from 30 m, telegraphs, and follows you most of the way across the island.
 export const ENEMY_TYPES = [
-  { key: 'crab',    name: 'Mudcrab',   hp: 45,  dmg: 8,  speed: 4.8, xp: 25,  scale: 0.9, reach: 1.8, aim: 0.42,
+  { key: 'crab',    name: 'Mudcrab',   model: 'MON-032', modelH: 0.62,
+    hp: 45,  dmg: 8,  speed: 4.8, xp: 25,  scale: 0.9, reach: 1.8, aim: 0.42,
     wake: 7,  leash: 14,  threat: 0.9, pack: 1,
-    color: 0x6b5540, accent: 0x9a7346 },
-  { key: 'hound',   name: 'Nix-Hound', hp: 80,  dmg: 14, speed: 6.4, xp: 45,  scale: 1.0, reach: 2.4, aim: 0.75,
+    color: 0x6b5540 },
+  { key: 'hound',   name: 'Nix-Hound', model: 'MON-037', modelH: 0.95,
+    hp: 80,  dmg: 14, speed: 6.4, xp: 45,  scale: 1.0, reach: 2.4, aim: 0.75,
     wake: 38, leash: 60,  threat: 0,   pack: 2, harry: true,
-    color: 0x4f4a38, accent: 0x6f6750 },
-  { key: 'kagouti', name: 'Kagouti',   hp: 190, dmg: 26, speed: 4.2, xp: 110, scale: 1.0, reach: 3.0, aim: 1.5,
+    color: 0x4f4a38 },
+  { key: 'kagouti', name: 'Kagouti',   model: 'MON-036', modelH: 1.72,
+    hp: 190, dmg: 26, speed: 4.2, xp: 110, scale: 1.0, reach: 3.0, aim: 1.5,
     wake: 30, leash: 120, threat: 0.6, pack: 1,
-    color: 0x6b5a3e, accent: 0x3e3327 }
+    color: 0x6b5a3e }
 ];
 export const enemies = [];
 
@@ -59,186 +66,106 @@ export function pickTarget(from, dir) {
   return best;
 }
 
-// ---------------------------------------------------------------- shared assets
-// One set of geometries per creature type, built the first time that type is spawned and then
-// borrowed by every rig of that type forever. Nothing in this section runs per spawn: that is
-// what stops renderer.info.memory.geometries climbing. Materials are per-rig (two per rig,
-// cloned once when the rig is built) so tint variation and the hit flash stay per-creature.
+// ---------------------------------------------------------------- models
+// Loaded once, before anything spawns: `main.js` awaits `loadCreatureModels()`. Each rig gets a
+// SkeletonUtils clone — a plain Object3D.clone would leave every clone sharing one skeleton, so
+// they would all animate as the same animal — with its own material clones, which is what keeps
+// per-creature tint and the hit flash per-creature. Geometries are shared by every clone, so the
+// pool below still holds renderer.info.memory.geometries flat.
 //
-// Everything is built lazily rather than at module scope on purpose: constructing a THREE
-// object draws a UUID from the seeded Math.random stream, and this module would then shift the
-// world for every seed (see plan.md).
-const assets = new Map();
-let eyeGeo = null, eyeMat = null;
-const CRAB_LEG_REST = -0.34;   // how far a crab's leg hangs below horizontal at rest
+// Clips come out of the GLB named `MON-032__Idle`, `MON-032__Walk` and so on; only the part after
+// the double underscore means anything here.
+const MODEL_DIR = new URL('../models/voxel-starter-kit-monsters-all/GLB/Models/', import.meta.url).href;
+const gltfLoader = new GLTFLoader();
+const models = new Map();
 
-function sharedEye() {
-  if (!eyeGeo) {
-    eyeGeo = new THREE.SphereGeometry(0.055, 6, 5);
-    eyeMat = new THREE.MeshBasicMaterial({ color: 0xffdd66 });
-  }
+export async function loadCreatureModels() {
+  const ids = [...new Set(ENEMY_TYPES.map(t => t.model))];
+  await Promise.all(ids.map(async id => {
+    try {
+      const gltf = await gltfLoader.loadAsync(`${MODEL_DIR}${id}.glb`);
+      const box = new THREE.Box3().setFromObject(gltf.scene);
+      const clips = new Map();
+      for (const clip of gltf.animations) clips.set(clip.name.slice(clip.name.lastIndexOf('__') + 2), clip);
+      models.set(id, { scene: gltf.scene, clips, minY: box.min.y, height: box.max.y - box.min.y });
+    } catch (err) {
+      // A missing model must not take the world down with it — see the placeholder in buildRig.
+      console.error(`[enemies] ${id} failed to load; falling back to a block body`, err);
+    }
+  }));
 }
 
-function assetsFor(type) {
-  let a = assets.get(type.key);
-  if (a) return a;
-  sharedEye();
-  a = {
-    geo: buildGeos(type.key),
-    color: new THREE.Color(type.color),
-    accent: new THREE.Color(type.accent)
-  };
-  assets.set(type.key, a);
-  return a;
-}
-
-// --- geometry, one entry per body part, all sized at 1 unit = 1 metre with the rig standing on
-// the origin. Parts that swing are parented to a zero-rotation pivot so animation maths is clean.
-function buildGeos(key) {
-  if (key === 'crab') {
-    // low wide shell, claws out front, six stubby legs, eyes on stalks
-    const shell = new THREE.SphereGeometry(0.6, 12, 8);
-    shell.scale(1.5, 0.5, 1.05);
-    const claw = new THREE.BoxGeometry(0.13, 0.13, 0.34); claw.translate(0, 0, 0.17);
-    const pincer = new THREE.SphereGeometry(0.12, 7, 6); pincer.scale(0.9, 0.8, 1.5);
-    // the leg hangs below its hip at rest, so the crab reads as standing rather than splayed flat
-    const leg = new THREE.BoxGeometry(0.06, 0.06, 0.48); leg.translate(0, 0, 0.24);
-    const stalk = new THREE.CylinderGeometry(0.026, 0.032, 0.2, 5);
-    return { shell, claw, pincer, leg, stalk };
-  }
-  if (key === 'hound') {
-    // low quadruped, long snout, thin legs, whippy tail
-    const body = new THREE.CapsuleGeometry(0.24, 0.78, 4, 8); body.rotateX(Math.PI / 2);
-    const neck = new THREE.CylinderGeometry(0.12, 0.16, 0.32, 6);
-    const head = new THREE.BoxGeometry(0.22, 0.19, 0.26);
-    const snout = new THREE.ConeGeometry(0.095, 0.56, 6); snout.rotateX(Math.PI / 2);
-    const ear = new THREE.ConeGeometry(0.055, 0.24, 5);
-    const leg = new THREE.CylinderGeometry(0.045, 0.05, 0.6, 5); leg.translate(0, -0.3, 0);
-    const tail = new THREE.ConeGeometry(0.06, 0.5, 5); tail.rotateX(-1.2);
-    return { body, neck, head, snout, ear, leg, tail };
-  }
-  // kagouti: tall, hunched, horned, heavy hind legs
-  const body = new THREE.CapsuleGeometry(0.36, 0.85, 5, 10); body.rotateX(Math.PI / 2);
-  const hump = new THREE.SphereGeometry(0.44, 10, 8); hump.scale(1, 0.85, 1.15);
-  const neck = new THREE.CylinderGeometry(0.14, 0.2, 0.45, 6);
-  const head = new THREE.BoxGeometry(0.28, 0.24, 0.4);
-  const snout = new THREE.ConeGeometry(0.12, 0.3, 6); snout.rotateX(Math.PI / 2);
-  const horn = new THREE.ConeGeometry(0.055, 0.46, 5);
-  const leg = new THREE.CylinderGeometry(0.09, 0.12, 1.2, 6); leg.translate(0, -0.6, 0);
-  const arm = new THREE.CylinderGeometry(0.055, 0.075, 0.65, 5); arm.translate(0, -0.32, 0);
-  const tail = new THREE.ConeGeometry(0.08, 0.7, 6); tail.rotateX(-1.3);
-  return { body, hump, neck, head, snout, horn, leg, arm, tail };
+// The kit ships MeshStandardMaterial, and this project dropped PBR on purpose (plan.md): no
+// environment map exists here, so metalness has nothing to reflect and reads as flat black. Lambert
+// with the same colour is the era-correct equivalent, and it supports the emissive the hit flash
+// and the models' own eye glow use.
+function toLambert(src) {
+  if (src.isMeshLambertMaterial) return src.clone();
+  const m = new THREE.MeshLambertMaterial({
+    name: src.name,
+    color: src.color ? src.color.clone() : new THREE.Color(0xffffff),
+    map: src.map || null
+  });
+  if (src.emissive) m.emissive.copy(src.emissive);
+  return m;
 }
 
 // ---------------------------------------------------------------- rigs
-// A rig is the visual body: group + meshes + the two materials it owns. Rigs are pooled per
-// type and re-used across respawns, so a rig is built at most once per creature on screen.
+// A rig is the visual body: group + cloned model + its own materials + its animation mixer. Rigs
+// are pooled per type and re-used across respawns, so a rig is built at most once per creature on
+// screen.
 const pools = new Map();
 
 function buildRig(type) {
-  const A = assetsFor(type);
-  const bodyMat = new THREE.MeshLambertMaterial({ color: A.color, flatShading: true });
-  const accentMat = new THREE.MeshLambertMaterial({ color: A.accent, flatShading: true });
   const group = new THREE.Group();
-  const limbs = { body: null, head: null, arms: [], legs: [], shell: null };
-  const part = (geo, mat, x, y, z, rx = 0, ry = 0, rz = 0, parent = group) => {
-    const m = new THREE.Mesh(geo, mat);
-    m.position.set(x, y, z);
-    m.rotation.set(rx, ry, rz);
-    parent.add(m);
-    return m;
+  const rig = {
+    type, group, model: null, mixer: null, actions: null, current: null,
+    mats: [], skin: [], baseColor: [], emissive: []
   };
 
-  if (type.key === 'crab') {
-    limbs.shell = part(A.geo.shell, bodyMat, 0, 0.32, 0);
-
-    for (const side of [-1, 1]) {
-      const claw = new THREE.Group();
-      claw.position.set(side * 0.4, 0.28, 0.42);
-      claw.rotation.y = side * 0.5;
-      part(A.geo.claw, accentMat, 0, 0, 0, 0, 0, 0, claw);
-      part(A.geo.pincer, accentMat, 0, 0, 0.4, 0, 0, 0, claw);
-      group.add(claw);
-      limbs.arms.push(claw);
-    }
-    for (const side of [-1, 1]) {
-      for (const z of [-0.28, 0.02, 0.32]) {
-        // hip sets the splay, swing carries the gait, so animating one never fights the other
-        const hip = new THREE.Group();
-        hip.position.set(side * 0.46, 0.24, z);
-        hip.rotation.y = side * Math.PI / 2;
-        const swing = new THREE.Group();
-        swing.rotation.z = CRAB_LEG_REST;
-        part(A.geo.leg, accentMat, 0, 0, 0, 0, 0, 0, swing);
-        hip.add(swing);
-        group.add(hip);
-        limbs.legs.push(swing);
-      }
-      const stalk = part(A.geo.stalk, accentMat, side * 0.16, 0.5, 0.34);
-      stalk.rotation.x = -0.25;
-      part(eyeGeo, eyeMat, side * 0.16, 0.6, 0.37);
-    }
-
-  } else if (type.key === 'hound') {
-    limbs.body = part(A.geo.body, bodyMat, 0, 0.7, 0);
-
-    const head = new THREE.Group();
-    head.position.set(0, 0.88, 0.55);
-    part(A.geo.neck, bodyMat, 0, -0.04, 0.02, 0.85, 0, 0, head);
-    part(A.geo.head, bodyMat, 0, 0.03, 0.19, 0, 0, 0, head);
-    part(A.geo.snout, accentMat, 0, -0.02, 0.45, 0, 0, 0, head);
-    part(A.geo.ear, accentMat, -0.085, 0.19, 0.17, -0.18, 0, 0.22, head);
-    part(A.geo.ear, accentMat, 0.085, 0.19, 0.17, -0.18, 0, -0.22, head);
-    part(eyeGeo, eyeMat, -0.075, 0.07, 0.28, 0, 0, 0, head);
-    part(eyeGeo, eyeMat, 0.075, 0.07, 0.28, 0, 0, 0, head);
-    group.add(head);
-    limbs.head = head;
-
-    for (const side of [-1, 1]) {
-      for (const z of [0.38, -0.38]) {
-        const leg = new THREE.Group();
-        leg.position.set(side * 0.16, 0.62, z);
-        part(A.geo.leg, accentMat, 0, 0, 0, 0, 0, 0, leg);
-        group.add(leg);
-        limbs.legs.push(leg);
-      }
-    }
-    part(A.geo.tail, accentMat, 0, 0.78, -0.66);
-
-  } else {
-    limbs.body = part(A.geo.body, bodyMat, 0, 1.35, -0.1, -0.18, 0, 0);
-    part(A.geo.hump, bodyMat, 0, 1.55, 0.3);
-
-    const head = new THREE.Group();
-    head.position.set(0, 1.62, 0.72);
-    part(A.geo.neck, bodyMat, 0, -0.05, -0.04, 0.55, 0, 0, head);
-    part(A.geo.head, bodyMat, 0, 0.08, 0.16, 0, 0, 0, head);
-    part(A.geo.snout, accentMat, 0, 0.03, 0.38, 0, 0, 0, head);
-    part(A.geo.horn, accentMat, -0.13, 0.3, 0.1, -0.2, 0, 0.35, head);
-    part(A.geo.horn, accentMat, 0.13, 0.3, 0.1, -0.2, 0, -0.35, head);
-    part(eyeGeo, eyeMat, -0.1, 0.12, 0.3, 0, 0, 0, head);
-    part(eyeGeo, eyeMat, 0.1, 0.12, 0.3, 0, 0, 0, head);
-    group.add(head);
-    limbs.head = head;
-
-    for (const side of [-1, 1]) {
-      const hind = new THREE.Group();
-      hind.position.set(side * 0.3, 1.25, -0.4);
-      part(A.geo.leg, accentMat, 0, 0, 0, 0, 0, 0, hind);
-      group.add(hind);
-      limbs.legs.push(hind);
-
-      const arm = new THREE.Group();
-      arm.position.set(side * 0.28, 1.45, 0.5);
-      part(A.geo.arm, accentMat, 0, 0, 0, 0, 0, 0, arm);
-      group.add(arm);
-      limbs.arms.push(arm);
-    }
-    part(A.geo.tail, accentMat, 0, 1.45, -0.8);
+  const glb = models.get(type.model);
+  if (!glb) {
+    // An invisible enemy that still hits you is worse than an ugly one.
+    const h = type.modelH * type.scale;
+    const mat = new THREE.MeshLambertMaterial({ color: type.color, flatShading: true });
+    const body = new THREE.Mesh(new THREE.BoxGeometry(h * 0.7, h, h * 1.3), mat);
+    body.position.y = h * 0.5;
+    group.add(body);
+    rig.mats.push(mat);
+    rig.emissive.push(mat.emissive.clone());
+    return rig;
   }
 
-  group.scale.setScalar(type.scale);
-  return { type, group, mats: [bodyMat, accentMat], limbs };
+  const model = cloneSkinned(glb.scene);
+  model.traverse(o => {
+    if (o.name.startsWith('Collision')) { o.visible = false; return; }   // simplified proxies
+    if (!o.isMesh) return;
+    const wasArray = Array.isArray(o.material);
+    const out = (wasArray ? o.material : [o.material]).map(src => {
+      const mat = toLambert(src);
+      rig.mats.push(mat);
+      rig.emissive.push(mat.emissive.clone());
+      // eyes glow on their own and must not be tinted with the hide
+      if (!/eye/i.test(mat.name)) { rig.skin.push(mat); rig.baseColor.push(mat.color.clone()); }
+      return mat;
+    });
+    o.material = wasArray ? out : out[0];
+  });
+
+  // Normalise: every creature is authored at 1 unit = 1 m but the models are not the same size, so
+  // each is scaled to its type's height and dropped so its feet sit on the group origin.
+  const s = (type.modelH * type.scale) / glb.height;
+  model.scale.multiplyScalar(s);
+  model.position.y = -glb.minY * s;
+  group.add(model);
+  rig.model = model;
+
+  if (glb.clips.size) {
+    rig.mixer = new THREE.AnimationMixer(model);
+    rig.actions = {};
+    for (const [name, clip] of glb.clips) rig.actions[name] = rig.mixer.clipAction(clip);
+  }
+  return rig;
 }
 
 function acquireRig(type) {
@@ -249,11 +176,13 @@ function acquireRig(type) {
   return rig;
 }
 
-// Nothing is disposed here: the rig goes back on the pile with its geometries and materials
+// Nothing is disposed here: the rig goes back on the pile with its model, materials and clips
 // intact, which is exactly what keeps a long session's GPU memory flat.
 function releaseRig(rig) {
   scene.remove(rig.group);
-  rig.group.rotation.set(0, 0, 0);   // clears the death tilt; spawn sets position and scale again
+  rig.group.rotation.set(0, 0, 0);          // clears the placeholder body's death tilt
+  if (rig.model) rig.model.rotation.set(0, 0, 0);
+  if (rig.mixer) { rig.mixer.stopAllAction(); rig.current = null; }
   pools.get(rig.type.key).push(rig);
 }
 
@@ -278,19 +207,25 @@ function placeEnemy(type, spot, home = spot) {
   const rig = acquireRig(type);
   const g = rig.group;
   g.position.set(spot.x, heightAt(spot.x, spot.z), spot.z);
-  // per-creature variation lives on the rig's own material and scale, never in new geometry
+  // per-creature variation lives on the rig's own material clones, never in new geometry. The base
+  // colour is kept because a pooled rig is re-tinted for every creature that borrows it.
   const tint = Math.random();
-  rig.mats[0].color.copy(assetsFor(type).color).offsetHSL((tint - 0.5) * 0.03, (tint - 0.5) * 0.12, (tint - 0.5) * 0.09);
-  rig.mats[0].emissive.setRGB(0, 0, 0);
-  rig.mats[1].emissive.setRGB(0, 0, 0);
+  for (let i = 0; i < rig.skin.length; i++) {
+    rig.skin[i].color.copy(rig.baseColor[i])
+      .offsetHSL((tint - 0.5) * 0.03, (tint - 0.5) * 0.12, (tint - 0.5) * 0.09);
+  }
+  for (let i = 0; i < rig.mats.length; i++) rig.mats[i].emissive.copy(rig.emissive[i]);
+  if (rig.model) rig.model.rotation.set(0, 0, 0);
   const jitter = 0.94 + Math.random() * 0.12;
-  g.scale.setScalar(type.scale * jitter);
+  g.scale.setScalar(jitter);
+
+  playClip(rig, 'Idle', 0);
 
   enemies.push({
     type, rig, mesh: g, home: new THREE.Vector3(home.x, 0, home.z),
     hp: type.hp, maxHp: type.hp, state: 'wander',
     dir: Math.random() * Math.PI * 2, timer: 0, atkCd: 0, alertT: 0, orbit: 0,
-    dead: 0, flash: 0, phase: Math.random() * 6.283
+    dead: 0, flash: 0, swing: 0
   });
 }
 
@@ -342,47 +277,50 @@ export function damageEnemy(e, amount) {
 }
 
 // ---------------------------------------------------------------- animation
-// One gait per creature, driven from data on the enemy (phase, moving) rather than from
-// performance.now(), so every creature is on its own beat and nothing allocates.
-function animate(e, dt, moving) {
-  const L = e.rig.limbs;
-  e.phase += dt * (moving ? 6 + e.type.speed : 1.5);
-  const s = Math.sin(e.phase);
+// Behaviour picks a clip; the clip owns the pose. `fade` is a crossfade so a creature changing its
+// mind at the edge of its wake does not snap between two poses.
+const FADE = 0.18;
 
-  if (e.type.key === 'crab') {
-    const amp = moving ? 0.4 : 0.06;
-    L.arms[0].rotation.y = -0.5 + s * amp;
-    L.arms[1].rotation.y = 0.5 - s * amp;
-    // claws up while it sizes you up: the only warning a mudcrab gives
-    const raised = e.state === 'alert' ? 1 : 0;
-    L.arms[0].rotation.x = -0.75 * raised;
-    L.arms[1].rotation.x = -0.75 * raised;
-    for (let i = 0; i < L.legs.length; i++) {
-      L.legs[i].rotation.z = CRAB_LEG_REST + Math.sin(e.phase + i * 1.7) * (moving ? 0.3 : 0.04);
-    }
-    L.shell.position.y = 0.32 + Math.abs(s) * (moving ? 0.02 : 0.006);
-    return;
+function playClip(rig, name, fade = FADE) {
+  if (!rig.actions) return;
+  const next = rig.actions[name];
+  if (!next || rig.current === name) return;
+  const prev = rig.current ? rig.actions[rig.current] : null;
+  next.reset();
+  if (name === 'Death' || name === 'Attack01') {
+    next.setLoop(THREE.LoopOnce, 1);
+    next.clampWhenFinished = true;
+  } else {
+    next.setLoop(THREE.LoopRepeat, Infinity);
+  }
+  next.setEffectiveWeight(1).play();
+  if (prev && prev !== next) { prev.fadeOut(fade); next.fadeIn(fade); }
+  rig.current = name;
+}
+
+// The kit has no "sizing you up" clip, so the threat display is the idle held slowed down with the
+// body reared back — the same telegraph the procedural bodies had, expressed on the model. It is
+// subtler than a hand-posed skeleton; a real threat clip would be better.
+function animate(e, dt, moving, speed) {
+  const rig = e.rig;
+  if (!rig.mixer) return;
+
+  if (rig.model) {
+    const rear = e.state === 'alert' ? -0.14 : 0;
+    const r = rig.model.rotation;
+    r.x += (rear - r.x) * Math.min(1, dt * 10);
   }
 
-  if (e.type.key === 'hound') {
-    // diagonal gait: legs 0 and 3 together, 1 and 2 together
-    for (let i = 0; i < 4; i++) {
-      const ph = e.phase + (i === 0 || i === 3 ? 0 : Math.PI);
-      L.legs[i].rotation.x = Math.sin(ph) * (moving ? 0.62 : 0.05);
-    }
-    L.body.position.y = 0.7 + Math.abs(s) * (moving ? 0.035 : 0.01);
-    L.head.rotation.x = -0.06 + Math.sin(e.phase * 0.5) * 0.06;
-    return;
-  }
+  // an attack is a one-shot: it plays to the end before locomotion gets the body back
+  if (e.swing > 0) { e.swing -= dt; rig.mixer.update(dt); return; }
 
-  // the crouch is a kagouti's charge telegraph, held for the length of its threat
-  const crouch = e.state === 'alert' ? 1 : 0;
-  L.legs[0].rotation.x = Math.sin(e.phase) * (moving ? 0.5 : 0.03);
-  L.legs[1].rotation.x = -Math.sin(e.phase) * (moving ? 0.5 : 0.03);
-  L.arms[0].rotation.x = -Math.sin(e.phase) * (moving ? 0.42 : 0.06);
-  L.arms[1].rotation.x = Math.sin(e.phase) * (moving ? 0.42 : 0.06);
-  L.body.position.y = 1.35 + Math.abs(s) * (moving ? 0.05 : 0.012) - crouch * 0.1;
-  L.head.rotation.x = -0.04 + Math.sin(e.phase * 0.5) * 0.07 + crouch * 0.3;
+  const ratio = speed / e.type.speed;
+  const name = !moving ? 'Idle' : ratio > 0.55 ? 'Run' : 'Walk';
+  playClip(rig, name);
+  const act = rig.actions && rig.actions[rig.current];
+  // in-place locomotion: the clip has to run at the creature's real ground speed or the feet slide
+  if (act && moving) act.setEffectiveTimeScale(THREE.MathUtils.clamp(ratio / (name === 'Run' ? 1 : 0.3), 0.7, 1.6));
+  rig.mixer.update(dt);
 }
 
 // ---------------------------------------------------------------- per-frame
@@ -399,9 +337,12 @@ export function updateEnemies(dt) {
     const m = e.mesh;
 
     if (e.dead) {
+      if (e.dead === 1) playClip(e.rig, 'Death', 0.12);
       e.dead += dt;
-      m.rotation.x = Math.min(Math.PI / 2, e.dead * 3.4);
+      // the Death clip owns the collapse; only the block placeholder has to be tipped over by hand
+      if (!e.rig.actions) m.rotation.x = Math.min(Math.PI / 2, e.dead * 3.4);
       m.position.y = heightAt(m.position.x, m.position.z) - Math.max(0, e.dead - 2.2) * 1.4;
+      if (e.rig.mixer) e.rig.mixer.update(dt);
       if (e.dead > 4) {
         releaseRig(e.rig);
         enemies.splice(i, 1);
@@ -424,7 +365,10 @@ export function updateEnemies(dt) {
     if (e.flash > 0) {
       e.flash = Math.max(0, e.flash - dt);
       const f = e.flash * 5;
-      for (const mat of e.rig.mats) mat.emissive.setRGB(f, 0, 0);
+      for (let k = 0; k < e.rig.mats.length; k++) {
+        const base = e.rig.emissive[k];
+        e.rig.mats[k].emissive.setRGB(base.r + f, base.g, base.b);
+      }
     }
 
     e.timer -= dt; e.atkCd -= dt;
@@ -443,6 +387,8 @@ export function updateEnemies(dt) {
     if (e.state === 'chase') {
       if (dist <= e.type.reach && e.atkCd <= 0) {
         e.atkCd = 1.35;
+        e.swing = 0.83;                 // Attack01 is 0.83 s long
+        playClip(e.rig, 'Attack01', 0.1);
         player.hp -= e.type.dmg * (1 - Math.min(0.4, player.level * 0.03));
         flashDamage();
         if (player.hp <= 0) {
@@ -483,7 +429,7 @@ export function updateEnemies(dt) {
         m.position.x = nx; m.position.z = nz;
       } else e.dir += 2.2;
     }
-    animate(e, dt, speed > 0);
+    animate(e, dt, speed > 0, speed);
     m.position.y = heightAt(m.position.x, m.position.z);
   }
 }

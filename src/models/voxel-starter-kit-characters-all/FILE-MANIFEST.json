@@ -1,0 +1,797 @@
+{
+  "version": "1.1.0",
+  "pack": "P02",
+  "marketplace": "itch",
+  "files": [
+    {
+      "path": "ANIMATION-MANIFEST.csv",
+      "bytes": 58613,
+      "sha256": "92021a418bdc81acb11cfa7c2a3d070f4dec724628610d3e1bc25fb842c97e83"
+    },
+    {
+      "path": "ASSET-MANIFEST.csv",
+      "bytes": 10215,
+      "sha256": "820c7eb9da0a3a029b77b7f8dbc4f204b3c2a04d6ff3973bfbbff609071e71d4"
+    },
+    {
+      "path": "CREATION-PROCESS.txt",
+      "bytes": 576,
+      "sha256": "49ea60adde393d5a8b14fcc4ac7e07bbc7114c40a3e46338fdce2569ee554084"
+    },
+    {
+      "path": "FBX/Models/CHR-001_VillageFarmer.fbx",
+      "bytes": 2408284,
+      "sha256": "bf1892d0d718713e107d8fe06a03f50197563225af10e2ae735b22494de21f70"
+    },
+    {
+      "path": "FBX/Models/CHR-002_OrchardKeeper.fbx",
+      "bytes": 2433180,
+      "sha256": "2bc49567c350efe43585613413b5b3acff9aaedca78a3e9ebdf78ad016035793"
+    },
+    {
+      "path": "FBX/Models/CHR-003_Blacksmith.fbx",
+      "bytes": 2457468,
+      "sha256": "81fd8838b99d3c8203676aea99dc96d6f1c2f2817dd09e22912618ee2c3e3cb2"
+    },
+    {
+      "path": "FBX/Models/CHR-004_Carpenter.fbx",
+      "bytes": 2453804,
+      "sha256": "016ffe4b8035a7025e732babf1ef18888aa645442c923092663ccb1ea9bed331"
+    },
+    {
+      "path": "FBX/Models/CHR-005_StoneMason.fbx",
+      "bytes": 2365900,
+      "sha256": "af2d0ba5f6492fa4ecef7e1cdb8b5a9e69f18a8917855b59b873bd75b295fa2f"
+    },
+    {
+      "path": "FBX/Models/CHR-006_Miner.fbx",
+      "bytes": 2432844,
+      "sha256": "ccecc4c7b5be314bbde1b29a193b6e288307632cb9a1cbc2b727ec96b2f4d56c"
+    },
+    {
+      "path": "FBX/Models/CHR-007_Fisher.fbx",
+      "bytes": 2520956,
+      "sha256": "99121fa8a2dd88c1f44756537a91f6e4dfd064df52f88b9720bbe3b270b366cd"
+    },
+    {
+      "path": "FBX/Models/CHR-008_Dockworker.fbx",
+      "bytes": 2566460,
+      "sha256": "e3eacc37b12bd4de944eefd7f1b5bdd905fb9c10bc6eafe6ccef75900c4a2a57"
+    },
+    {
+      "path": "FBX/Models/CHR-009_Merchant.fbx",
+      "bytes": 2497212,
+      "sha256": "46ac18ff55fd3232f3ffb03ccf77b9af1a51d6c2183c28be9748b48c013e4d38"
+    },
+    {
+      "path": "FBX/Models/CHR-010_TravelingTrader.fbx",
+      "bytes": 2701980,
+      "sha256": "f388323579dcfb915d09e88860964579a19307af620cd8ff844316bd3dc7b0a6"
+    },
+    {
+      "path": "FBX/Models/CHR-011_Innkeeper.fbx",
+      "bytes": 2477580,
+      "sha256": "b629f9ba2f9d332cd278542479f6e1a29392f2313ae916714a7846b203490167"
+    },
+    {
+      "path": "FBX/Models/CHR-012_Cook.fbx",
+      "bytes": 2544636,
+      "sha256": "28598fc2dfa839dfeab1abeca1066b6bf907170bd4796a6da08b733fc91bd859"
+    },
+    {
+      "path": "FBX/Models/CHR-013_Baker.fbx",
+      "bytes": 2453836,
+      "sha256": "bd1dc9cd17486882e96ab2615a1f2a308d19c1b2ec6b2ea42b0de5109e23f8fe"
+    },
+    {
+      "path": "FBX/Models/CHR-014_Healer.fbx",
+      "bytes": 2589468,
+      "sha256": "67fc37c5fc73c7af5855c63b3312cb87e91dbe4ad2629721aa6f18fc224aad20"
+    },
+    {
+      "path": "FBX/Models/CHR-015_Scholar.fbx",
+      "bytes": 3039436,
+      "sha256": "8cc88e12ad3b705adbe7b6287ba79c020330970558701e438d2254d3cba848c0"
+    },
+    {
+      "path": "FBX/Models/CHR-016_Alchemist.fbx",
+      "bytes": 2993484,
+      "sha256": "9c445e450185856a6d09aaaf71702392165aaeb6c66a01b2c70442b287fd4f77"
+    },
+    {
+      "path": "FBX/Models/CHR-017_TownGuard.fbx",
+      "bytes": 2657468,
+      "sha256": "3063f6b47a9f840aec1ba9c4ddeda0dc7d251cc19dbe85fd169d53c4cb5e84c7"
+    },
+    {
+      "path": "FBX/Models/CHR-018_RoyalGuard.fbx",
+      "bytes": 2365772,
+      "sha256": "4fc26da86a217ba1be8757b50024507d31bbddba8be4ddc883fa0f9540fe32a3"
+    },
+    {
+      "path": "FBX/Models/CHR-019_KnightAspirant.fbx",
+      "bytes": 2702412,
+      "sha256": "3f7b6e2fc44df12710ace8b794cee69bede0e563cfba64fdecf27898a587b1fd"
+    },
+    {
+      "path": "FBX/Models/CHR-020_VeteranSoldier.fbx",
+      "bytes": 2565916,
+      "sha256": "408b97676281fac42d527debedacfee7e553cfdca6ea4f9cabc92df7b609031f"
+    },
+    {
+      "path": "FBX/Models/CHR-021_Scout.fbx",
+      "bytes": 2499452,
+      "sha256": "3fa6b016a891f816925cc9029961ea26dad2a0122879b1e8e59c611c67f7b0ec"
+    },
+    {
+      "path": "FBX/Models/CHR-022_ForestRanger.fbx",
+      "bytes": 2474092,
+      "sha256": "eb809257eb552e123476214997ebad360bfc738d917c04ef4911f7be380334e9"
+    },
+    {
+      "path": "FBX/Models/CHR-023_DesertNomad.fbx",
+      "bytes": 2903340,
+      "sha256": "ebd1eb1e94b0f0a7b51c2f6dc13d7a5b3e08172f7929d322dbcb30ed1f5694b7"
+    },
+    {
+      "path": "FBX/Models/CHR-024_MountainGuide.fbx",
+      "bytes": 2746764,
+      "sha256": "2c8d0cf105f423865128c11b6e0fe6d2052560c278bd40eb7c01c02fd2a44198"
+    },
+    {
+      "path": "FBX/Models/CHR-025_SeaCaptain.fbx",
+      "bytes": 2949244,
+      "sha256": "8166380d124156afd91fe252d594c4b56f4a0a1f37c180e635a8e6a9df5d760f"
+    },
+    {
+      "path": "FBX/Models/CHR-026_DeckSailor.fbx",
+      "bytes": 2450668,
+      "sha256": "7bacfb47c76e9efd97229fb32c66be364ba5d0ee7775cf04190eb7244becdb6f"
+    },
+    {
+      "path": "FBX/Models/CHR-027_TreasureHunter.fbx",
+      "bytes": 2565468,
+      "sha256": "577fb70acc0237c516a1d70293a7bbfaf7faa5e4482ebfcdaa8121d088338ceb"
+    },
+    {
+      "path": "FBX/Models/CHR-028_Bandit.fbx",
+      "bytes": 2318524,
+      "sha256": "6c085e613fc044303d8ed81821569ad5dab5afc65b965cca553e4c9870d99743"
+    },
+    {
+      "path": "FBX/Models/CHR-029_HighwayRobber.fbx",
+      "bytes": 2881740,
+      "sha256": "05fe65aeb6e8e087796e432efcf5770d6b2b7e71f17aa7b18cbf54cf3a8ff13b"
+    },
+    {
+      "path": "FBX/Models/CHR-030_Duelist.fbx",
+      "bytes": 2522988,
+      "sha256": "b12bdb7bcd7e8eebc5975cb3e64fec9ea2c9ed569b327afb0ca3b5a6f7f8d9fa"
+    },
+    {
+      "path": "FBX/Models/CHR-031_Monk.fbx",
+      "bytes": 2476364,
+      "sha256": "5b8c67996bf17cc190271ff6063f3addaa396a81ec2a8daf4cf684f8efc56837"
+    },
+    {
+      "path": "FBX/Models/CHR-032_MartialArtist.fbx",
+      "bytes": 2364332,
+      "sha256": "91fb4b610da236ee9220b9a4b5260e52435f704a4161a1b951af00279def0e1d"
+    },
+    {
+      "path": "FBX/Models/CHR-033_VillageElder.fbx",
+      "bytes": 2835420,
+      "sha256": "f2fba76b0ffd53929415f3a708bf71cf7c7a32e15debbbdbf04fc2e53b1f2218"
+    },
+    {
+      "path": "FBX/Models/CHR-034_Courier.fbx",
+      "bytes": 2519580,
+      "sha256": "f054be1401ed68d749c78866346e7fca23a3df897c52aa7b9118d2d6d5fe1697"
+    },
+    {
+      "path": "FBX/Models/CHR-035_StableKeeper.fbx",
+      "bytes": 2562284,
+      "sha256": "ed430808a8db336388ef66caa62bae686cc28fcb060e88c2b48e5b1e71218e0c"
+    },
+    {
+      "path": "FBX/Models/CHR-036_Gardener.fbx",
+      "bytes": 2542940,
+      "sha256": "783289bc0c6f99bcc7605b7fe998b02be358ab6aa15e9e8430e0eb6ecd667c85"
+    },
+    {
+      "path": "FBX/Models/CHR-037_GraveKeeper.fbx",
+      "bytes": 2631788,
+      "sha256": "d03e5992325a916027dc685c683b8e024b5cbefc351915c25f30dd7fd2a25f38"
+    },
+    {
+      "path": "FBX/Models/CHR-038_FestivalPerformer.fbx",
+      "bytes": 2474700,
+      "sha256": "da3765d67aa8481dec4293a94c266c92e477b9395e19809e4229355423602eea"
+    },
+    {
+      "path": "FBX/Models/CHR-039_CourtJester.fbx",
+      "bytes": 2654684,
+      "sha256": "9986da4d802a5e5a7dddc0f2b01b6a7ffa4288baf00cd44d1a3434cc5eda9ef2"
+    },
+    {
+      "path": "FBX/Models/CHR-040_Bard.fbx",
+      "bytes": 2945116,
+      "sha256": "81c2b83d69dfe2540cc461f62e0d39e7cdec7b447c9ae3b8a963f25ca3689899"
+    },
+    {
+      "path": "FBX/Models/CHR-041_BattleMage.fbx",
+      "bytes": 2836204,
+      "sha256": "63b29da2e7b9b1801ddb87670facad41c433362d4e2cd4ecbe1d53f81441718e"
+    },
+    {
+      "path": "FBX/Models/CHR-042_ApprenticeMage.fbx",
+      "bytes": 2701100,
+      "sha256": "69f780362a15c8bb7f6c5278f300df1b410df171ceb4230df4f8a675481401f5"
+    },
+    {
+      "path": "FBX/Models/CHR-043_Witch.fbx",
+      "bytes": 2927020,
+      "sha256": "45ade825448205c02a023bc67db5fca5bf903f275625dc0bb5b80933a2f48106"
+    },
+    {
+      "path": "FBX/Models/CHR-044_Druid.fbx",
+      "bytes": 3105132,
+      "sha256": "d72cff0ae0682036bc7be2fd5fc59bd7006fdcc642a406de5780071d1082d859"
+    },
+    {
+      "path": "FBX/Models/CHR-045_Necromancer.fbx",
+      "bytes": 2862220,
+      "sha256": "b4ab40524d2e9cdd73f08f46fe414f039dd857199d91dd0ba8b67f1e574dfbca"
+    },
+    {
+      "path": "FBX/Models/CHR-046_SteampunkMechanic.fbx",
+      "bytes": 2879740,
+      "sha256": "49a59bd355106e36374bb27e4d35fe292c48add1062402c721295e7743183955"
+    },
+    {
+      "path": "FBX/Models/CHR-047_SpaceExplorer.fbx",
+      "bytes": 2836380,
+      "sha256": "865285af80a4b4e97c21fe9960abca719b3f57081321772a6c94ae4a91a6dd5e"
+    },
+    {
+      "path": "FBX/Models/CHR-048_SecurityOfficer.fbx",
+      "bytes": 2387196,
+      "sha256": "1fe45816c2cd003d9069b367efd07be2fe221a80cc40f7d1253f6597f7f78bc7"
+    },
+    {
+      "path": "FBX/Models/CHR-049_WastelandSurvivor.fbx",
+      "bytes": 2703244,
+      "sha256": "440a1ffa9b4afc6f6b3478354f495542b9e9e7c2d9ed683480fa0bf7174be71a"
+    },
+    {
+      "path": "FBX/Models/CHR-050_TrainingAdventurer.fbx",
+      "bytes": 2227436,
+      "sha256": "07c6dd5eb4e67e26b5d20670a57588df670685266862e517bc1f3738403a732f"
+    },
+    {
+      "path": "GLB/Models/CHR-001_VillageFarmer.glb",
+      "bytes": 288444,
+      "sha256": "66c747843fc345256f3c85a3b9598a2f8aa96c99eb4ecbfeaddf54d13c14ad4e"
+    },
+    {
+      "path": "GLB/Models/CHR-002_OrchardKeeper.glb",
+      "bytes": 271532,
+      "sha256": "f136df386f7d25d3f54f3011266dd8e20208830ed7434f1dac6a864d490fb7a5"
+    },
+    {
+      "path": "GLB/Models/CHR-003_Blacksmith.glb",
+      "bytes": 278292,
+      "sha256": "f60ff855af29d35c1fab10ff263d3ed63fb4b154014f3d1cf37f387db869480a"
+    },
+    {
+      "path": "GLB/Models/CHR-004_Carpenter.glb",
+      "bytes": 277740,
+      "sha256": "6d24e6aa220faffc0842669ed19e7afdd0efd159746dca47ffeed43a385511c0"
+    },
+    {
+      "path": "GLB/Models/CHR-005_StoneMason.glb",
+      "bytes": 266024,
+      "sha256": "7e5d243f0da44e6dd129fca5f4dd2c898ee259fe20c7663c51e3e8126976eff9"
+    },
+    {
+      "path": "GLB/Models/CHR-006_Miner.glb",
+      "bytes": 275572,
+      "sha256": "c3f7743a9fe6feaae285f5eb6574fcc926df071779797e2742299308a735736b"
+    },
+    {
+      "path": "GLB/Models/CHR-007_Fisher.glb",
+      "bytes": 274152,
+      "sha256": "f78494089f3d1600431e086af74e083758393ebadd29738894922750c4c54884"
+    },
+    {
+      "path": "GLB/Models/CHR-008_Dockworker.glb",
+      "bytes": 282176,
+      "sha256": "13a1793e68446899ac776bd0757d0ddfe7619c1e74f1925766950917028d243c"
+    },
+    {
+      "path": "GLB/Models/CHR-009_Merchant.glb",
+      "bytes": 279664,
+      "sha256": "1dacff2348684950e1f55ed26cb9a57f8234c1ab479bc849412e9ed504f4bc43"
+    },
+    {
+      "path": "GLB/Models/CHR-010_TravelingTrader.glb",
+      "bytes": 293652,
+      "sha256": "729742a0a7240f0911e40e1d478af4ab3b31cb31fab21569148962d873f92c48"
+    },
+    {
+      "path": "GLB/Models/CHR-011_Innkeeper.glb",
+      "bytes": 263536,
+      "sha256": "a94e1abf425f76af854091efdb3b597fb0eee00ee8932f9b87aac3bb2be7d284"
+    },
+    {
+      "path": "GLB/Models/CHR-012_Cook.glb",
+      "bytes": 271260,
+      "sha256": "d35486d80e920be4561ea6f17babeab8f47d12801e1b9ddafe75c95faa816d0f"
+    },
+    {
+      "path": "GLB/Models/CHR-013_Baker.glb",
+      "bytes": 266492,
+      "sha256": "c513cb5552d0525bd65a2022a3ce569f7c7b9a689268fdf89f0da03c3d8f3519"
+    },
+    {
+      "path": "GLB/Models/CHR-014_Healer.glb",
+      "bytes": 296244,
+      "sha256": "0fedcb204dfb87db23dac3b4128d73c770221042f0ba7058c76dfea6a955fae5"
+    },
+    {
+      "path": "GLB/Models/CHR-015_Scholar.glb",
+      "bytes": 337072,
+      "sha256": "eeab7fa42c26481642faede6403f8e6d495926b6c630f6550c9fda134041f1b3"
+    },
+    {
+      "path": "GLB/Models/CHR-016_Alchemist.glb",
+      "bytes": 343044,
+      "sha256": "7b0f61467a8b97b5ff2a8a81e1d3d5f418f079c86edf3b6b305d352225e18835"
+    },
+    {
+      "path": "GLB/Models/CHR-017_TownGuard.glb",
+      "bytes": 309712,
+      "sha256": "5d3fa87b4354cdf731ae3bfdaed0410a019a17fd4156bf2d9d49d50e4b9928d7"
+    },
+    {
+      "path": "GLB/Models/CHR-018_RoyalGuard.glb",
+      "bytes": 263948,
+      "sha256": "be4fa8f0ce0787ee8fbe68a2313e8567446d098831069b80ef384bb20e2185b4"
+    },
+    {
+      "path": "GLB/Models/CHR-019_KnightAspirant.glb",
+      "bytes": 313176,
+      "sha256": "30548c655c4f2596308026355a65e879a6f43f8febc5e0237a2ea7825458714d"
+    },
+    {
+      "path": "GLB/Models/CHR-020_VeteranSoldier.glb",
+      "bytes": 284048,
+      "sha256": "fce0f301ae95342132c85257723c76e1bfa46475fc586160eb28ba8ac0cfe8f9"
+    },
+    {
+      "path": "GLB/Models/CHR-021_Scout.glb",
+      "bytes": 273824,
+      "sha256": "bb80dbf2009eb2354168f43bd2d465d7ad11ce4a20b7ae86fd768f66b43b17e3"
+    },
+    {
+      "path": "GLB/Models/CHR-022_ForestRanger.glb",
+      "bytes": 272144,
+      "sha256": "65329102445d3ee704f09b7f919fc590b4ba79dec74f4a9f0d51d44f170e6bed"
+    },
+    {
+      "path": "GLB/Models/CHR-023_DesertNomad.glb",
+      "bytes": 318456,
+      "sha256": "fe99a8abc45780e8e552458c65da6221bdf306608244e2b372424040f24e0aff"
+    },
+    {
+      "path": "GLB/Models/CHR-024_MountainGuide.glb",
+      "bytes": 302976,
+      "sha256": "2d4708353b674999da1512af1372ec5c8d7eee4a79f1c9d60be2dba4cc4c06ef"
+    },
+    {
+      "path": "GLB/Models/CHR-025_SeaCaptain.glb",
+      "bytes": 328240,
+      "sha256": "88054163d357ef1a17460c83c051ef63b1f2952a91e265203c4501b9dedd1207"
+    },
+    {
+      "path": "GLB/Models/CHR-026_DeckSailor.glb",
+      "bytes": 260876,
+      "sha256": "aa5c346016cca9bba57f4a3a33173f74719a8c9a7c89b50ea9e6068758aec943"
+    },
+    {
+      "path": "GLB/Models/CHR-027_TreasureHunter.glb",
+      "bytes": 292460,
+      "sha256": "9c790cfe3f4e1b31d2df29cc3c24788bf912cb7033b088ebd858adbe237a9678"
+    },
+    {
+      "path": "GLB/Models/CHR-028_Bandit.glb",
+      "bytes": 250908,
+      "sha256": "94efc7e3d79dc9ac67be97c9d00c8236bd9e8ded62d3b31a0de5205b298873d8"
+    },
+    {
+      "path": "GLB/Models/CHR-029_HighwayRobber.glb",
+      "bytes": 325776,
+      "sha256": "f74a038b781f8ae704215d6051ef4d4baa0f7f4d6ff926ff08e0ce592a85a206"
+    },
+    {
+      "path": "GLB/Models/CHR-030_Duelist.glb",
+      "bytes": 278220,
+      "sha256": "be08db27ea6a9a937aec5663ac5b608e01f654595c90df9ab9af15e56d76809e"
+    },
+    {
+      "path": "GLB/Models/CHR-031_Monk.glb",
+      "bytes": 276720,
+      "sha256": "138c9ac8229ac3be77162367b9a61294c12d16faad59a47deb1e420d8481173b"
+    },
+    {
+      "path": "GLB/Models/CHR-032_MartialArtist.glb",
+      "bytes": 248972,
+      "sha256": "3b1b21822e2eb3f6915db10a01a8144a124a494c27b82a89e93d1b1ecfd5e6d7"
+    },
+    {
+      "path": "GLB/Models/CHR-033_VillageElder.glb",
+      "bytes": 325528,
+      "sha256": "f06d5dc4e0546ea04faf397b8173aac96f7149f6dbc3707a4cd43d2a31ab4ba5"
+    },
+    {
+      "path": "GLB/Models/CHR-034_Courier.glb",
+      "bytes": 281236,
+      "sha256": "45a2b49319e29f4a3376825634f445e519d2a227726d5a2742e1d69949d08bce"
+    },
+    {
+      "path": "GLB/Models/CHR-035_StableKeeper.glb",
+      "bytes": 276852,
+      "sha256": "732c16094b8ecf3eaac67b5f08030db3b758d78e633c39bf37ceae379238e63f"
+    },
+    {
+      "path": "GLB/Models/CHR-036_Gardener.glb",
+      "bytes": 279460,
+      "sha256": "6031315de852f3bf5cc0e23b3da27279e4444828830d19ad1bd86462768e8514"
+    },
+    {
+      "path": "GLB/Models/CHR-037_GraveKeeper.glb",
+      "bytes": 281000,
+      "sha256": "2a88b0e28f266017b7edcacde3caf432e917846f633ec66567ddb8849686ee96"
+    },
+    {
+      "path": "GLB/Models/CHR-038_FestivalPerformer.glb",
+      "bytes": 282752,
+      "sha256": "7ee4251414a26cbe7ea8b4b213be699f024bffee948b94ec6333326872e146fb"
+    },
+    {
+      "path": "GLB/Models/CHR-039_CourtJester.glb",
+      "bytes": 290404,
+      "sha256": "6501536c0f68202d2d66e6ce9b1cb7d4d5245539d8e43c6181e3585dd4b7d030"
+    },
+    {
+      "path": "GLB/Models/CHR-040_Bard.glb",
+      "bytes": 331544,
+      "sha256": "b775526a10c5674cb36228ac4e2e990b9c631a783df43a9c5384e0ba9e0f51da"
+    },
+    {
+      "path": "GLB/Models/CHR-041_BattleMage.glb",
+      "bytes": 337292,
+      "sha256": "25c403ce13d14c6a1e0188398e92eec2a6b99206d8467980c8759866652fe136"
+    },
+    {
+      "path": "GLB/Models/CHR-042_ApprenticeMage.glb",
+      "bytes": 315952,
+      "sha256": "d0fc537d3e20b7ed360302b2173b09a990083cfa48cd8d9b3ec6bcf60f80383b"
+    },
+    {
+      "path": "GLB/Models/CHR-043_Witch.glb",
+      "bytes": 327796,
+      "sha256": "0527bf809a7554f622b0509b10dd2e20629f988e24b17e0354caf9b9f4f7c1b5"
+    },
+    {
+      "path": "GLB/Models/CHR-044_Druid.glb",
+      "bytes": 357032,
+      "sha256": "4fdc32a6d76b8923f360abde464194cdb5704b542c4a8730747fa2597f7400a0"
+    },
+    {
+      "path": "GLB/Models/CHR-045_Necromancer.glb",
+      "bytes": 339676,
+      "sha256": "074263292bad808b8b89cbb089e2c1865f5df23efb20ab66205ee1825fde83d0"
+    },
+    {
+      "path": "GLB/Models/CHR-046_SteampunkMechanic.glb",
+      "bytes": 319964,
+      "sha256": "a2552563dff714610ab5956b8dec90bd7a1cb1f2c100b2fc2c973c752f6175c9"
+    },
+    {
+      "path": "GLB/Models/CHR-047_SpaceExplorer.glb",
+      "bytes": 295288,
+      "sha256": "20038053872aa1a7e08e42ed5da5795d20fcf3c4552e880a8b4bb79f3a0fad21"
+    },
+    {
+      "path": "GLB/Models/CHR-048_SecurityOfficer.glb",
+      "bytes": 260880,
+      "sha256": "257e1807ec964b33548c263f639020b09b86a8a706b14c8853519631b1cb3c4b"
+    },
+    {
+      "path": "GLB/Models/CHR-049_WastelandSurvivor.glb",
+      "bytes": 296560,
+      "sha256": "b5d079d3771f279dde3c9dbbe86d6446fe2c87a0e29127ceadd558d65d5f2678"
+    },
+    {
+      "path": "GLB/Models/CHR-050_TrainingAdventurer.glb",
+      "bytes": 241944,
+      "sha256": "3af2722160a2d6d25ec8e70b2789416d16759076615f025251e33810bd8227ad"
+    },
+    {
+      "path": "LICENSE-README.txt",
+      "bytes": 208,
+      "sha256": "491dcd71bea120bbc1c5d7c7dac075c137cb43de9ab614ef6087ffb8ad9c9e87"
+    },
+    {
+      "path": "LICENSE.txt",
+      "bytes": 2754,
+      "sha256": "8b9a018b53f1a03b46e6697970cee7b56cbe19970160a35a79d4408bdef459cf"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 2513,
+      "sha256": "8d8d832f45ca188ab2b857d9be0f0cd553a3481a3cd62772305767bbc8e8b299"
+    },
+    {
+      "path": "Source/Models/CHR-001_VillageFarmer.blend",
+      "bytes": 5657465,
+      "sha256": "42acf9f5a838cce1da8aa4bc892f3eeb14b70e5464b79f8d3e4744e1deb8fbd9"
+    },
+    {
+      "path": "Source/Models/CHR-002_OrchardKeeper.blend",
+      "bytes": 5649483,
+      "sha256": "f81da388799ee2a9d85bd04834022824377349f8fba8692d8173df2398db6e51"
+    },
+    {
+      "path": "Source/Models/CHR-003_Blacksmith.blend",
+      "bytes": 5658232,
+      "sha256": "a6b1c5abb8fbd5483368b491027b8d2658b6cebec0058fdc9a0e828b87df05c9"
+    },
+    {
+      "path": "Source/Models/CHR-004_Carpenter.blend",
+      "bytes": 5636697,
+      "sha256": "bc0a63055c94a92086002fcbbc9c1395f5f4b8da84177f32bcbc1c6a4a0fba0e"
+    },
+    {
+      "path": "Source/Models/CHR-005_StoneMason.blend",
+      "bytes": 5607243,
+      "sha256": "e4a9a983557fc40ea3e754fc4a3e1a09ef3526d3be6c1b96b521a815d047c94e"
+    },
+    {
+      "path": "Source/Models/CHR-006_Miner.blend",
+      "bytes": 5673135,
+      "sha256": "dd39fd1bcb8f74e57f21bf051b285638b2363bdc52ccc33daea3c2a0245d5389"
+    },
+    {
+      "path": "Source/Models/CHR-007_Fisher.blend",
+      "bytes": 5647207,
+      "sha256": "e7a962b9489029c8be6752832b41ed9ae465a17dedff60c73d3943cf12a69f85"
+    },
+    {
+      "path": "Source/Models/CHR-008_Dockworker.blend",
+      "bytes": 5663305,
+      "sha256": "be07eea9e16124c90de7756d6348a08477bd975eb62b2ad444509052484e1c91"
+    },
+    {
+      "path": "Source/Models/CHR-009_Merchant.blend",
+      "bytes": 5645709,
+      "sha256": "8d785460c83e49bad2ac6178550593c07a6b9c7db6f4efb63077f1ead735ced1"
+    },
+    {
+      "path": "Source/Models/CHR-010_TravelingTrader.blend",
+      "bytes": 5701179,
+      "sha256": "01f1269a5b7b19c0aa35d3dc4b483408475e7e2f1d24c5382b22b8ca7ae658c2"
+    },
+    {
+      "path": "Source/Models/CHR-011_Innkeeper.blend",
+      "bytes": 5653631,
+      "sha256": "e59f7a68fe93b0bc86f5aa9ed99487879047f98c1e5f32e6c5ebb4c6e0416ea8"
+    },
+    {
+      "path": "Source/Models/CHR-012_Cook.blend",
+      "bytes": 5697260,
+      "sha256": "dd4cfb6a6de01f4dda0c655d7597b6f6213440fe6d678279ba8277c2ef56ebaf"
+    },
+    {
+      "path": "Source/Models/CHR-013_Baker.blend",
+      "bytes": 5650993,
+      "sha256": "3edf2b04c45092d1e395ad36e5c10e25c47283885b9385070de33193c7010921"
+    },
+    {
+      "path": "Source/Models/CHR-014_Healer.blend",
+      "bytes": 5678704,
+      "sha256": "7fdac63b0839a6272a92fc65e7b94d19ef05d0d5c0a6b3cea5ecec19a1b7a55f"
+    },
+    {
+      "path": "Source/Models/CHR-015_Scholar.blend",
+      "bytes": 5832121,
+      "sha256": "c266f81ee9557b4cf1c28d7ff29d99f946630a6fe6af7243e16dcc2c9c7fc8c4"
+    },
+    {
+      "path": "Source/Models/CHR-016_Alchemist.blend",
+      "bytes": 5803858,
+      "sha256": "4b78959f8562f46dfd3435a9fc80cf50a3a7b57cf168111c98021794635cc4c7"
+    },
+    {
+      "path": "Source/Models/CHR-017_TownGuard.blend",
+      "bytes": 5702369,
+      "sha256": "0e06982598f6a49437ac5a6e92d68cc654ff616446d4c455b772cc364c038821"
+    },
+    {
+      "path": "Source/Models/CHR-018_RoyalGuard.blend",
+      "bytes": 5604931,
+      "sha256": "3898c9f10f0afe70ec5b4dabcf33959f7acc1f54be2658d86153f27767139c99"
+    },
+    {
+      "path": "Source/Models/CHR-019_KnightAspirant.blend",
+      "bytes": 5715572,
+      "sha256": "588e372e0d197499e45bb967aa3a2d4807d0c83f9d56987a4d5ab7a7c4c62397"
+    },
+    {
+      "path": "Source/Models/CHR-020_VeteranSoldier.blend",
+      "bytes": 5686837,
+      "sha256": "5700d40f3fb431dc8f7dc4ee885abc58f76b8ce7c9889ae16c819b4b6442f05a"
+    },
+    {
+      "path": "Source/Models/CHR-021_Scout.blend",
+      "bytes": 5641855,
+      "sha256": "69b85c79042e3e7418407eaf10ca269c65341ede4a5847c08c3092981dcd8034"
+    },
+    {
+      "path": "Source/Models/CHR-022_ForestRanger.blend",
+      "bytes": 5636241,
+      "sha256": "def768b3ef3bcd8c73050d5a8ce7d11a63325d326417411cabcfbdcb0eb35558"
+    },
+    {
+      "path": "Source/Models/CHR-023_DesertNomad.blend",
+      "bytes": 5764292,
+      "sha256": "ccd10f06e70f6dde836870b61ee6ec86cdfdf49d05e08637a2882af64e143bb8"
+    },
+    {
+      "path": "Source/Models/CHR-024_MountainGuide.blend",
+      "bytes": 5718138,
+      "sha256": "97790c65aeadb081d3b7ed4ccd37e80294ff410889f25727662d97a1211185f9"
+    },
+    {
+      "path": "Source/Models/CHR-025_SeaCaptain.blend",
+      "bytes": 5804626,
+      "sha256": "671bfce50eee4fab2637ad145dc217f162502ab99a635d4266c723f6029c1229"
+    },
+    {
+      "path": "Source/Models/CHR-026_DeckSailor.blend",
+      "bytes": 5624387,
+      "sha256": "51c64048a472838cf3e4c01ee557315c5319b76fcca2bd2acf84b5e8b431b53f"
+    },
+    {
+      "path": "Source/Models/CHR-027_TreasureHunter.blend",
+      "bytes": 5671809,
+      "sha256": "25af704d0d68777a46c294cd733732935931319bfaaf6e6eb0fd51d39f4e2047"
+    },
+    {
+      "path": "Source/Models/CHR-028_Bandit.blend",
+      "bytes": 5584262,
+      "sha256": "d9e6bff30f60efa9b6754312fb1ea415a9881b56d922406b34e27030e1219493"
+    },
+    {
+      "path": "Source/Models/CHR-029_HighwayRobber.blend",
+      "bytes": 5789599,
+      "sha256": "d6fe35115f035e88fdf3fd960edfc557ab2c27622d8c8d6b9b2ece2f90b1c144"
+    },
+    {
+      "path": "Source/Models/CHR-030_Duelist.blend",
+      "bytes": 5673781,
+      "sha256": "f821aaff0259f22e85f3d4187a5a23306ac29d1c90d4459aa51cfdcedf547481"
+    },
+    {
+      "path": "Source/Models/CHR-031_Monk.blend",
+      "bytes": 5639222,
+      "sha256": "894b663fc5d2f65762f5c4ba5b76422496ebacae953ab6424baf265027e80086"
+    },
+    {
+      "path": "Source/Models/CHR-032_MartialArtist.blend",
+      "bytes": 5594584,
+      "sha256": "216beeaa6f1c3014aa069f401f205ae827f9c49feda8a86a2893c7baa835259f"
+    },
+    {
+      "path": "Source/Models/CHR-033_VillageElder.blend",
+      "bytes": 5756394,
+      "sha256": "a5d0a6f7cc2f03e9a98c35a3828c2d101c40d647633eb7e637f2054d067f7dc1"
+    },
+    {
+      "path": "Source/Models/CHR-034_Courier.blend",
+      "bytes": 5652982,
+      "sha256": "f73683821d9ee9f90e2e22359815a2b4971810eea5c8206333c95b0284fd595f"
+    },
+    {
+      "path": "Source/Models/CHR-035_StableKeeper.blend",
+      "bytes": 5661300,
+      "sha256": "779f1dfe09fcf469f95a46433532bc9721242ebbad7364044e2cd09300fd1bb7"
+    },
+    {
+      "path": "Source/Models/CHR-036_Gardener.blend",
+      "bytes": 5656119,
+      "sha256": "af0b65a0f7e3a7b2859ec6df8e9620899512574b4a462109eb04d8787385e43b"
+    },
+    {
+      "path": "Source/Models/CHR-037_GraveKeeper.blend",
+      "bytes": 5700727,
+      "sha256": "ea5a52ce9ee0803636ecafd1dc15e3ed26d0eeb424188b9e7884981dd7354c15"
+    },
+    {
+      "path": "Source/Models/CHR-038_FestivalPerformer.blend",
+      "bytes": 5644767,
+      "sha256": "195e48dde2d59714e080a612a765dd8031f100a6ab1c064b8d46aebad2368ae8"
+    },
+    {
+      "path": "Source/Models/CHR-039_CourtJester.blend",
+      "bytes": 5689145,
+      "sha256": "0c4eb7f636e7850b439cc3180ef400a5f4c5643aebd7b3e4a05a492550ed3c5c"
+    },
+    {
+      "path": "Source/Models/CHR-040_Bard.blend",
+      "bytes": 5784736,
+      "sha256": "8fd6b138f8e19901371a6618e85d46fb94403f0426e74b6fbe7cd62ae2182c2b"
+    },
+    {
+      "path": "Source/Models/CHR-041_BattleMage.blend",
+      "bytes": 5762381,
+      "sha256": "4b0b0afde6cc35c084e74c516b917016037a19ae6d9c57d582f144f53f21ade4"
+    },
+    {
+      "path": "Source/Models/CHR-042_ApprenticeMage.blend",
+      "bytes": 5718089,
+      "sha256": "c5c1cbbdb7a517c6a042df9d1ce9d0dc3efcbd230adab6b8606ceded730d65a3"
+    },
+    {
+      "path": "Source/Models/CHR-043_Witch.blend",
+      "bytes": 5801123,
+      "sha256": "5a1a2bac4a03cc0c79ddb46b9b84409ff55d490014b52e8424056daffc98098c"
+    },
+    {
+      "path": "Source/Models/CHR-044_Druid.blend",
+      "bytes": 5838096,
+      "sha256": "d352bcf834d11e83f3e63c956e6cb2ca5a7441e6737a56bee7fc24e5d38793a5"
+    },
+    {
+      "path": "Source/Models/CHR-045_Necromancer.blend",
+      "bytes": 5839700,
+      "sha256": "ce2338a1eae540f69016b9258a7a7778b2d004ab3f2b0ca1d365b909169e9315"
+    },
+    {
+      "path": "Source/Models/CHR-046_SteampunkMechanic.blend",
+      "bytes": 5763495,
+      "sha256": "a9aa53e151cef4950342e7295f5c176fb24771009fda7bb4ce7238abe319aeae"
+    },
+    {
+      "path": "Source/Models/CHR-047_SpaceExplorer.blend",
+      "bytes": 5800750,
+      "sha256": "81a79803c3c691936bdcbec56af39b1fc72f1a58fa7c4afc217a0545a1e2d13e"
+    },
+    {
+      "path": "Source/Models/CHR-048_SecurityOfficer.blend",
+      "bytes": 5631745,
+      "sha256": "d8feec7372882c5ef806954c69d5734169d497d9ec09647a970865b09aab1a54"
+    },
+    {
+      "path": "Source/Models/CHR-049_WastelandSurvivor.blend",
+      "bytes": 5749990,
+      "sha256": "6b20a067f5866506f53f7ddb64a15cd0fd7ba1f04a11709f67026c32325e4a61"
+    },
+    {
+      "path": "Source/Models/CHR-050_TrainingAdventurer.blend",
+      "bytes": 5698106,
+      "sha256": "644171e728940bea519b72082a81aa01a6c0028eccbaec4f66911260b0c4ddd9"
+    },
+    {
+      "path": "Third-Party Notices.txt",
+      "bytes": 313,
+      "sha256": "0301c4b93f2b8f0555fd6df8f6f045792d41e53340ff5f1b8ee09e6be4eaf946"
+    },
+    {
+      "path": "Unity/VoxelStarterKit_P02.unitypackage",
+      "bytes": 16312654,
+      "sha256": "79a386f4ac389c6192d87e248c0696bd9c79f0f95f2006a160c93b23d5070806"
+    }
+  ]
+}

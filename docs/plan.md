@@ -81,17 +81,45 @@ waterline. All instanced, all excluded from the settlement footprint. Trees and 
 cylinders into the `obstacles` array for collision.
 
 ### Settlement
-A Hlaalu village of 14 houses in two rows facing a street on a random axis, doors turned inward.
-Each house is generated: plastered adobe body on a stone base course over a buried plinth, flat roof
-with parapet, protruding vigas along the roofline, door and recessed windows. 55% get an offset
-second storey, 50% a wooden balcony with railing, 40% an external stair to the roof.
+A medieval stone village of ten houses in two rows facing a street on a random axis. Each house is
+assembled from the Retro Fantasy Kit on its 1 unit module grid and scaled so one module is a 3 m
+storey: two storeys of brick wall modules with timber courses, a door module facing the street,
+window modules on the flanks and above, and a slate roof. Front walls sit on a fixed line and the
+depth grows away from it, so houses of different sizes keep a straight facade.
+
+Rooflines cycle through five plans, because the kit forces the shape of the problem: its roof pieces
+are complete 1 module gables (ridge along local z), so a house wider than one module *cannot* have a
+single ridge and is always a run of gables. What the kit does allow is orientation and pitch —
+stepped gable ends turned to the street, shallow half-height gables with the ridges running along the
+street, roofs hipped at the alley ends with the kit's `roof-edge` tapers, a corner tower rising
+through the roof under a `tower-top` cap, and a flat `floor` slab ringed with `battlement`s.
+
+Every house stands on a 0.6 m grey plinth rather than sinking into the terrain, which puts the floor at
+the top of its stoop. The stoop is the kit's `floor-steps`: that piece is a wedge whose high edge is
+on its local +z, so it is turned to face the street and pushed back until that edge is flush with the
+front wall — the ramp then descends to the ground and the sill meets the top step.
+
+Street furniture is kit geometry too — barrels, crates, a barrel rack, brick piles and ladders against
+the front walls, and `fence-wood` runs behind both rows — all placed at the ground line rather than at
+the raised floor. Every house's props sit in its own module space, so they follow the front wall and
+the street angle.
+Nothing decorative draws from the seeded `Math.random` stream — variation comes from a hash of the
+house index, so decoration cannot shift the trees, rocks or spawn points.
+
+The kit paints bricks, stone, timber roof and details on separate textures, so geometry is merged
+per material across the whole town: several hundred pieces of kit become about eight meshes rather
+than as many draw calls. The site search and terracing are unchanged.
+
+Wall collision is rotated-AABB push-out, and each box is the house's own footprint plus 2 cm — the
+walls are flush with the module grid, so a larger margin reads as an invisible wall you stop short of.
 
 The site is chosen by sampling slope and height on two rings and keeping the flattest dry candidate,
 then `flattenDisc` levels it with a feathered rim. Wall collision is rotated-AABB push-out: transform
 the player into box space, clamp to the nearest face, transform back.
 
-Three street lanterns carry `PointLight`s. Window and lantern materials take an emissive ramp from
-the day/night cycle, so the village lights up after dark.
+Three street lanterns stand on kit `column-wood` posts, each with a `PointLight` and a small emissive
+head whose intensity ramps with the day/night cycle, so the street lights up after dark. Walls and
+windows do not glow; only the lamp heads do.
 
 ### Lighting and sky
 One directional light plus one hemisphere light, Lambert shading throughout, linear tone mapping.
@@ -103,7 +131,12 @@ actually being near the horizon, or night renders orange.
 ### Gameplay
 First-person controller with damped acceleration, sprint on stamina, jump, swimming, head bob and
 sway, cylinder and box collision. Melee is a swing animation with a cone hit test; the flame spell
-is a gravity-affected bolt with a 5.5 m splash. Three creature types (Mudcrab, Nix-Hound, Kagouti)
+is a gravity-affected bolt with a 5.5 m splash. The three creature bodies are skinned voxel models
+from the Monsters kit (`src/models/`): MON-032 cave crab, MON-037 thorn hound, MON-036 boulder
+beast, scaled to a per-type height so `aim` heights and the cone hit tests still line up. Each rig
+is a `SkeletonUtils` clone with its own material clones and its own `AnimationMixer`, and behaviour
+picks a clip (`Idle` / `Walk` / `Run` / `Attack01` / `Death`) rather than posing limbs by hand.
+Three creature types (Mudcrab, Nix-Hound, Kagouti)
 wander, wake, size you up with a threat display, chase as far as a leash around their home, retreat
 and attack, culling and respawning around the player. Temperament is data on `ENEMY_TYPES`: the
 mudcrab is territorial (notices you at 7 m, never follows you more than 14 m from its home), the
@@ -141,6 +174,9 @@ Three real bugs were caught that way and are worth remembering:
 
 ## Known ceilings
 
+- Creature bodies are the kit's voxel models at 700–2,500 triangles each, and the kit has no
+  dedicated threat-display clip, so the `alert` pose is the idle held slowed down and reared back.
+- Villager models are downloaded but unused: villagers need an NPC system that does not exist.
 - No per-instance culling. Everything is submitted every frame even though fog hides it past 140 m —
   ~1.9M triangles in 8 draw calls. Fine on a modern GPU, wasteful. Marked with a `ponytail:` comment
   in `src/world/flora.js` naming the upgrade path.

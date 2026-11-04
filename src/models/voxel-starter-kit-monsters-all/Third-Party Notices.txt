@@ -1,0 +1,3 @@
+Third-Party Notices
+
+No third-party model, texture, audio or font files are included. Meshes, rigs, animations and the preview script were constructed for this collection. Blender and Unity are creation/import tools and are not redistributed. The project uses Unity built-in shaders supplied by the Unity Editor.

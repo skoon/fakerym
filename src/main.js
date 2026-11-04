@@ -11,7 +11,7 @@ import { buildFlora, canopyMesh } from './world/flora.js';
 import { buildGrass, syncGrass, applyDayNight as grassLight } from './world/grass.js';
 
 import { player, spawnPlayer, movePlayer, drinkPotion } from './game/player.js';
-import { enemies, populateEnemies, updateEnemies, pickTarget, ENEMY_TYPES } from './game/enemies.js';
+import { enemies, populateEnemies, updateEnemies, pickTarget, ENEMY_TYPES, loadCreatureModels } from './game/enemies.js';
 import { initContracts, updateContracts, interact as useBoard, waypointOf, contractView } from './game/contracts.js';
 import { buildViewmodel, startSwing, swordSwing, castFlame, initBolts, updateBolts } from './game/combat.js';
 import { initLoot, updateLoot } from './game/loot.js';
@@ -29,11 +29,14 @@ buildTerrain();                    // geometry, ground texture and material only
 buildWater();
 const village = planVillage();     // picks a site and terraces the height grid
 paintTerrain();                    // ...so the mesh is generated from the *edited* grid
-buildVillage();
+await buildVillage();               // kit models are GLBs, so this is the one async build step
 buildFlora();
 buildGrass(village);
 buildViewmodel();
 spawnPlayer(village);
+// The creature bodies are GLBs. Parsing them draws THREE object UUIDs too, so it happens here in the
+// build sequence rather than racing the spawn loop from inside enemies.js.
+await loadCreatureModels();
 populateEnemies(player.pos, 26);
 initLoot();
 initBolts();

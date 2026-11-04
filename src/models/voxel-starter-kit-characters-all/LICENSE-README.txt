@@ -1,0 +1,1 @@
+For an itch.io purchase, LICENSE.txt in this archive governs all formats, including the Unity bonus. The Unity Asset Store notice inside the Unity package applies only to purchases through Unity Asset Store.

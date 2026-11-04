@@ -1,0 +1,25 @@
+VOXEL STARTER KIT — ASSET LICENSE
+Version 1.0 — October 2026
+
+The Licensor is the publisher identified on the original itch.io product page and its associated purchase record. The Licensee is the individual or legal entity identified on that receipt. This license covers only the packs included in that purchase.
+
+1. PERMITTED USE
+After authorized purchase, the Licensor grants the Licensee a perpetual, worldwide, non-exclusive license to use, copy, modify, optimize, convert, and incorporate these assets into personal and commercial projects. No royalties are due on those projects. Projects may include games, applications, films, rendered images, and other finished works.
+
+2. TEAM ACCESS
+Employees and contractors working on the Licensee's projects may access the editable assets for that work. The Licensee must require them to follow these terms. This permission does not give them a separate license for unrelated projects or clients.
+
+3. DISTRIBUTION
+The Licensee may distribute finished projects containing the assets, including ordinary compiled game builds. The Licensee may not sell, give away, sublicense, upload, or distribute the original or modified assets as standalone models, source packs, competing asset libraries, or templates whose primary value is redistribution of these assets. Ordinary embedded distribution in a finished project is permitted. Keep editable source access limited to authorized project participants.
+
+4. OWNERSHIP AND EDITS
+The Licensor retains ownership of the supplied asset content. The Licensee retains its own original project content and modifications, subject to the restriction on standalone redistribution of the supplied asset content. Attribution in a finished project is optional. Keep this license with private editable project copies. Routine editing, remeshing, optimization, or file conversion is permitted even if it removes asset metadata or modeled signatures. Passive identifiers contain no tracking or network functionality.
+
+5. FIXED CONTENT
+The purchase covers the files and pack contents stated in its release manifest. It includes no promise of future updates, extra packs, custom work, or continued support. Different file-format editions contain the same licensed pack content.
+
+6. CONDITION
+The assets are provided in the documented condition and tested software versions, with the limitations stated in the accompanying README. This license does not remove rights that applicable law does not permit the parties to exclude.
+
+7. UNAUTHORIZED SHARING
+Permission to use these assets does not permit unauthorized source sharing or asset resale. A passive signature alone is not proof of an unlicensed copy; authorization must be assessed against the purchase and license records.

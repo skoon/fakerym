@@ -1,0 +1,797 @@
+{
+  "version": "1.1.0",
+  "pack": "P16",
+  "marketplace": "itch",
+  "files": [
+    {
+      "path": "ANIMATION-MANIFEST.csv",
+      "bytes": 56495,
+      "sha256": "9370f9ddbec2397cbcfe35001a8de4e645c0222325a9534fa8c64f0878cbe006"
+    },
+    {
+      "path": "ASSET-MANIFEST.csv",
+      "bytes": 10275,
+      "sha256": "769f174c29e5fd0d0bfaed75d665d7cd5511cd3262c49e0d4c60b9ae77e6dda4"
+    },
+    {
+      "path": "CREATION-PROCESS.txt",
+      "bytes": 576,
+      "sha256": "49ea60adde393d5a8b14fcc4ac7e07bbc7114c40a3e46338fdce2569ee554084"
+    },
+    {
+      "path": "FBX/Models/UND-001_BareSkeleton.fbx",
+      "bytes": 3323180,
+      "sha256": "146a8d8ce29c1ce984efbbebcec0a7c483c5adac24fc01c16bec62e0985080dc"
+    },
+    {
+      "path": "FBX/Models/UND-002_SkeletonWarrior.fbx",
+      "bytes": 3465276,
+      "sha256": "b85632832f1be3af48d500267083fe6bb379bd2554c2a3427536fd02dd508c7d"
+    },
+    {
+      "path": "FBX/Models/UND-003_SkeletonArcher.fbx",
+      "bytes": 3778172,
+      "sha256": "2dcd14ca148774237aea94e357c5921b5a27473cc3d519af5faedb18b6389d8e"
+    },
+    {
+      "path": "FBX/Models/UND-004_SkeletonSpearman.fbx",
+      "bytes": 3552780,
+      "sha256": "65000f4b7da19b3874b8c18ba6f8905f1afe428dbb71fa6c21103699464725d0"
+    },
+    {
+      "path": "FBX/Models/UND-005_SkeletonCaptain.fbx",
+      "bytes": 3690860,
+      "sha256": "54c56012f16063118bed2a491ac5c5c904ea22915d5557737caeb2a291468641"
+    },
+    {
+      "path": "FBX/Models/UND-006_SkeletonMage.fbx",
+      "bytes": 3575580,
+      "sha256": "48ca6a0f04ee3770e526a0cb57544d73b2ff6378f936aea65bfc7b7e35af5e4b"
+    },
+    {
+      "path": "FBX/Models/UND-007_SkeletonMiner.fbx",
+      "bytes": 3512508,
+      "sha256": "62508c98cbd997378044d95a3b02a439c29b6a75979934a5e79fcbb0d2df0be1"
+    },
+    {
+      "path": "FBX/Models/UND-008_SkeletonSailor.fbx",
+      "bytes": 3595500,
+      "sha256": "33be75226e5a8524270f7e4c1b1127eb5f7d4a1e7de00aac2ac3c170217d7371"
+    },
+    {
+      "path": "FBX/Models/UND-009_SkeletonExecutioner.fbx",
+      "bytes": 3572636,
+      "sha256": "a9bb6458564826764c5c6fb12f48531f57abc84a41278e6de954b26d6667ce07"
+    },
+    {
+      "path": "FBX/Models/UND-010_SkeletonJester.fbx",
+      "bytes": 3707084,
+      "sha256": "5157a7f87d554f2eb5f3cd90284c9567b42dda560449b1226416c67be0975687"
+    },
+    {
+      "path": "FBX/Models/UND-011_BoneColossus.fbx",
+      "bytes": 3710892,
+      "sha256": "b1f3bf7a8097919314cac0de3eff8359999c5024ba48c2933183b2599cdfecda"
+    },
+    {
+      "path": "FBX/Models/UND-012_Four-ArmedBoneHorror.fbx",
+      "bytes": 4486732,
+      "sha256": "6aab36af113a36e749a866decbc6f69b4996add6450c47075b91f2f1bf1d63a0"
+    },
+    {
+      "path": "FBX/Models/UND-013_GraveZombie.fbx",
+      "bytes": 2387884,
+      "sha256": "96dab998a40c303edf529a40430f1b27d657f3f09455bfc24d73a2cf630faab8"
+    },
+    {
+      "path": "FBX/Models/UND-014_FarmerZombie.fbx",
+      "bytes": 2452748,
+      "sha256": "66b5cd633be00f9c9ea3326343256cd5b291c75c1379bc15513876b19268c75a"
+    },
+    {
+      "path": "FBX/Models/UND-015_GuardZombie.fbx",
+      "bytes": 2435516,
+      "sha256": "3d8dae5128b85cf2af1fc1a5138edea7667b1d2b6bc798ef40c0df01fef8b10c"
+    },
+    {
+      "path": "FBX/Models/UND-016_MinerZombie.fbx",
+      "bytes": 2412796,
+      "sha256": "14da3a68efbfff7a827950714baa34ba2e679a75de874546e5baba1d8560d2f0"
+    },
+    {
+      "path": "FBX/Models/UND-017_SailorZombie.fbx",
+      "bytes": 2474940,
+      "sha256": "b1eef10429b6682895f203cf30897347457555fd9fb8371515be7175c44cf52c"
+    },
+    {
+      "path": "FBX/Models/UND-018_PlagueZombie.fbx",
+      "bytes": 2456300,
+      "sha256": "9b46af72563132c8b4ad6a3a457df5d80fb99d7f14d855fb3c4b78a32889be2a"
+    },
+    {
+      "path": "FBX/Models/UND-019_FrostZombie.fbx",
+      "bytes": 2433468,
+      "sha256": "71cdc5e4f61cfc9118c54c7025902fab35941a1aca9a9dd206e142fd5d37af26"
+    },
+    {
+      "path": "FBX/Models/UND-020_CharredZombie.fbx",
+      "bytes": 2410716,
+      "sha256": "af110058d3dd8040f786db7141d99c94896ea177b3ff35fbf41139e942afca70"
+    },
+    {
+      "path": "FBX/Models/UND-021_MireZombie.fbx",
+      "bytes": 2435564,
+      "sha256": "e114fab529aac53fa0615639b6c548e036f6762701e1eefc7eaa0208667168e2"
+    },
+    {
+      "path": "FBX/Models/UND-022_ArmoredRevenant.fbx",
+      "bytes": 2409500,
+      "sha256": "7e07c0de9bba485b2f5a9122c97180d9df5b02b8438f8fce2999aaac0302f4e9"
+    },
+    {
+      "path": "FBX/Models/UND-023_GraveRevenant.fbx",
+      "bytes": 2434268,
+      "sha256": "49da48b9e955a44c0dc38e4cefa0f6e7721cc0aa4ab27893d4a6792ef18b78fe"
+    },
+    {
+      "path": "FBX/Models/UND-024_RoyalRevenant.fbx",
+      "bytes": 2502156,
+      "sha256": "876870983d0e44d6839418de0867774bd02c97df834851e7481d6eb1673f8440"
+    },
+    {
+      "path": "FBX/Models/UND-025_ExecutionerRevenant.fbx",
+      "bytes": 2429852,
+      "sha256": "2189c3b1f31df53d88e8c252b4c134d06aabc84f526b232a40241cc6cf01eda5"
+    },
+    {
+      "path": "FBX/Models/UND-026_WrappedMummy.fbx",
+      "bytes": 3225084,
+      "sha256": "686c0c742cc76514004a0020ece224a56a508f306eb638f4136e5b2a76f5d819"
+    },
+    {
+      "path": "FBX/Models/UND-027_RoyalMummy.fbx",
+      "bytes": 3360844,
+      "sha256": "1e77c0a04130259de5bed330f565fdf91ff54a9a08dcdd530cd93563a5733a81"
+    },
+    {
+      "path": "FBX/Models/UND-028_WarriorMummy.fbx",
+      "bytes": 3274444,
+      "sha256": "cea0502f66113c83af8d03b2f4840186977e64c92a93958400f56ce8ac1a60d6"
+    },
+    {
+      "path": "FBX/Models/UND-029_BogMummy.fbx",
+      "bytes": 3292956,
+      "sha256": "dfe7ef936bc5451302f728a187870ace85f654ac1e966bf2aa5589a5d9ab8af9"
+    },
+    {
+      "path": "FBX/Models/UND-030_FrostMummy.fbx",
+      "bytes": 3317692,
+      "sha256": "07d906a068f240cf78028fd16d9698cd9393c0987851b0030bd9f8ba368cbac6"
+    },
+    {
+      "path": "FBX/Models/UND-031_GraveGhoul.fbx",
+      "bytes": 2964940,
+      "sha256": "2e71e9ff70a210da4c0ae99fd01be5902d847466b5f55e19be5067f64a03a785"
+    },
+    {
+      "path": "FBX/Models/UND-032_CryptGhoul.fbx",
+      "bytes": 2942684,
+      "sha256": "bc5c736ac963aea6082028e1a140e37b066e3e07d58059da760b5549057e72f5"
+    },
+    {
+      "path": "FBX/Models/UND-033_BoneGhoul.fbx",
+      "bytes": 2804796,
+      "sha256": "33bf410f7ea70c4be3c68a1203aa3b7b1816aaf6d4fd9b172f2d3e495985450b"
+    },
+    {
+      "path": "FBX/Models/UND-034_StitchedBrute.fbx",
+      "bytes": 2456492,
+      "sha256": "5bdf66e16ec11a13962ec116158dfb76be7e2242454354d756c99da4bac7b4ab"
+    },
+    {
+      "path": "FBX/Models/UND-035_PatchworkCrawler.fbx",
+      "bytes": 2563564,
+      "sha256": "15022d6de1db48636cbcc4dfb55bc853bf70995b64831724de1fca2c343d86be"
+    },
+    {
+      "path": "FBX/Models/UND-036_HeadlessKnight.fbx",
+      "bytes": 2229820,
+      "sha256": "96f77b900d03c7f84b896d5538c71cb55a47d962496fed9add872b0f058a8f3c"
+    },
+    {
+      "path": "FBX/Models/UND-037_SkeletalHound.fbx",
+      "bytes": 3485564,
+      "sha256": "6df96e254215f9cedd126a29fa2ea938ec46ec2e057f2aa7051a8d4cf56b482c"
+    },
+    {
+      "path": "FBX/Models/UND-038_SkeletalWolf.fbx",
+      "bytes": 3665532,
+      "sha256": "ecbd6ba7e508e8c97dd17f4d83269516faf573f6c8e0d1af2a7a1822b0a754b8"
+    },
+    {
+      "path": "FBX/Models/UND-039_SkeletalHorse.fbx",
+      "bytes": 3181308,
+      "sha256": "436d3094758eb1dc88903edeb639c3e3d3b787c95112168da6f8bba6a46ce2ec"
+    },
+    {
+      "path": "FBX/Models/UND-040_SkeletalBoar.fbx",
+      "bytes": 3462380,
+      "sha256": "c13aef75a79e75d7e0073006c9c6c137e389b9ae13a25c0c4b3415ddd9662769"
+    },
+    {
+      "path": "FBX/Models/UND-041_SkeletalBear.fbx",
+      "bytes": 3480812,
+      "sha256": "cdbf9eac2f5666f5f1ce5578303b95501b1c03bb94143663a9636e2ad9690839"
+    },
+    {
+      "path": "FBX/Models/UND-042_ZombieHound.fbx",
+      "bytes": 2501260,
+      "sha256": "42ffb1df8775a5f5a715c068c812db8c1a151d2f59f007333b5357bf50097688"
+    },
+    {
+      "path": "FBX/Models/UND-043_ZombieRat.fbx",
+      "bytes": 2679468,
+      "sha256": "974e823e3f6223cf5d3f6cf7a72c1ca5de75d70fe225ffcca6505acb3185d068"
+    },
+    {
+      "path": "FBX/Models/UND-044_ZombieRaven.fbx",
+      "bytes": 2304060,
+      "sha256": "c6584a6455280879f5c2440feffd1df7ffbfdb9d937d042e1e8692f6810f2161"
+    },
+    {
+      "path": "FBX/Models/UND-045_BoneSpider.fbx",
+      "bytes": 2090956,
+      "sha256": "fa31f99c9e6922c9eef6275eba45845fa4c97242e59a92256ade85b25b3b3a28"
+    },
+    {
+      "path": "FBX/Models/UND-046_BoneSerpent.fbx",
+      "bytes": 2626140,
+      "sha256": "9c6438a4f6fdef00a81d7d846a513597e2516c041973ed4d6a0cb0ae99d5ef42"
+    },
+    {
+      "path": "FBX/Models/UND-047_CryptWraith.fbx",
+      "bytes": 2466444,
+      "sha256": "39995c22e4229ee88abc73b3612320c187fabe244cd8613809b8ecca58c2f45f"
+    },
+    {
+      "path": "FBX/Models/UND-048_LanternGhost.fbx",
+      "bytes": 2600156,
+      "sha256": "5aaea6fc864653d9771e85126cf39a7efd2f3d4fb65d8f2118346a0f78568f07"
+    },
+    {
+      "path": "FBX/Models/UND-049_ChainSpecter.fbx",
+      "bytes": 3428332,
+      "sha256": "c0356011bf1746640b8fc914ee254b80e53c93aeeb9b944b467ba58cb6e3aec9"
+    },
+    {
+      "path": "FBX/Models/UND-050_ShroudedSpecter.fbx",
+      "bytes": 2178732,
+      "sha256": "9f3c44aeea753ac7399c5a32c1cd44ceb43b60e78602b055c1e6aed35cd15020"
+    },
+    {
+      "path": "GLB/Models/UND-001_BareSkeleton.glb",
+      "bytes": 418468,
+      "sha256": "54cf5b95558d2d5d1fd43517802637b9a6155ee1726933ed893171c96c9772d0"
+    },
+    {
+      "path": "GLB/Models/UND-002_SkeletonWarrior.glb",
+      "bytes": 433324,
+      "sha256": "bb67b0acb31c705dc24075c47e02dcfa927f1a5f5128e5560c65519bd462208b"
+    },
+    {
+      "path": "GLB/Models/UND-003_SkeletonArcher.glb",
+      "bytes": 459560,
+      "sha256": "73bd46fc200f4ecfb9ea57d902d1b3f65f585313c5724a71386b809f9788f8ac"
+    },
+    {
+      "path": "GLB/Models/UND-004_SkeletonSpearman.glb",
+      "bytes": 443308,
+      "sha256": "56a9ff87ba08be3e09b9ec83c6fb350920af7330c4469f1aa89ef9349e28cc50"
+    },
+    {
+      "path": "GLB/Models/UND-005_SkeletonCaptain.glb",
+      "bytes": 450832,
+      "sha256": "bc24ccd56982adfba0578a9cb63d9613b0bfd481c320d0300eb614f910025c69"
+    },
+    {
+      "path": "GLB/Models/UND-006_SkeletonMage.glb",
+      "bytes": 444196,
+      "sha256": "14509939734c2b5cfb51a38933fefc2da0b693c8af49a56f9660210faca91e24"
+    },
+    {
+      "path": "GLB/Models/UND-007_SkeletonMiner.glb",
+      "bytes": 438832,
+      "sha256": "98fc96a2f0a8bde996645215e043ef649ca7f67fdc2c73cde6ace1ca3f2bd2dc"
+    },
+    {
+      "path": "GLB/Models/UND-008_SkeletonSailor.glb",
+      "bytes": 447664,
+      "sha256": "2de72649a4f4becf826702308c6f08076528f6422eeec9b71ceef792240f40f5"
+    },
+    {
+      "path": "GLB/Models/UND-009_SkeletonExecutioner.glb",
+      "bytes": 442732,
+      "sha256": "2c7ae90bb39af031245721da038b34d02023b723a15a53936119eadfa15d2706"
+    },
+    {
+      "path": "GLB/Models/UND-010_SkeletonJester.glb",
+      "bytes": 455660,
+      "sha256": "b5de6605dd4bf4c19f5a78a7d495f5cf19715c131c37bcd310b8d504644642a9"
+    },
+    {
+      "path": "GLB/Models/UND-011_BoneColossus.glb",
+      "bytes": 465452,
+      "sha256": "189d66a003d6640119bf43d36c5f97a6c90ac86535b4aca07c9f81682fcf27d6"
+    },
+    {
+      "path": "GLB/Models/UND-012_Four-ArmedBoneHorror.glb",
+      "bytes": 509712,
+      "sha256": "9eaa8bf70b63765ba1e8808e820d3361ce8029e7abdae02cc73c08cec3b9e7e2"
+    },
+    {
+      "path": "GLB/Models/UND-013_GraveZombie.glb",
+      "bytes": 281272,
+      "sha256": "c2034ed2944016ff0c291cdd36f5ba4ad2ef08baa0344039dba4e0b26a9d011e"
+    },
+    {
+      "path": "GLB/Models/UND-014_FarmerZombie.glb",
+      "bytes": 289044,
+      "sha256": "08313b4fd1f2124b77923be68210175288e42b967866f4cd9544fcb9d89e9e52"
+    },
+    {
+      "path": "GLB/Models/UND-015_GuardZombie.glb",
+      "bytes": 286828,
+      "sha256": "022aa6d8169a2eac79a43dd47731c08ba993d2a3e9871de0f8cbb56827ec3af3"
+    },
+    {
+      "path": "GLB/Models/UND-016_MinerZombie.glb",
+      "bytes": 284720,
+      "sha256": "8ae2e32b6c391008b688e371a769e0ff019186f914f741456900d2fa4471e008"
+    },
+    {
+      "path": "GLB/Models/UND-017_SailorZombie.glb",
+      "bytes": 287736,
+      "sha256": "c836d8b56cc38158535a5b1893b4623bbe01db99ebcfe31b89f4a0e8bf9d0954"
+    },
+    {
+      "path": "GLB/Models/UND-018_PlagueZombie.glb",
+      "bytes": 296852,
+      "sha256": "91bb55d186aa91d8dc333ae88286e9639ddc02d0a544a17208397d69184d3483"
+    },
+    {
+      "path": "GLB/Models/UND-019_FrostZombie.glb",
+      "bytes": 285896,
+      "sha256": "be9703136d215ef7169a27e6fe4277ce0f9f438382326bdb22a99c38702ca9e0"
+    },
+    {
+      "path": "GLB/Models/UND-020_CharredZombie.glb",
+      "bytes": 291064,
+      "sha256": "f88a54ead937fd838a07a84b36f989433f21116e585eaaf2061e4e802cf43993"
+    },
+    {
+      "path": "GLB/Models/UND-021_MireZombie.glb",
+      "bytes": 286984,
+      "sha256": "2c9957d7f7cd5d53ba44302c6415523511ebaddc6d4ce261ea67b79c2f539ee2"
+    },
+    {
+      "path": "GLB/Models/UND-022_ArmoredRevenant.glb",
+      "bytes": 276452,
+      "sha256": "f4c7cca6a5783b9862cfec9dafb9dae12bee4a2d3b5ab2084c782a450214d061"
+    },
+    {
+      "path": "GLB/Models/UND-023_GraveRevenant.glb",
+      "bytes": 282984,
+      "sha256": "9e8c4bdad892a1fbb0f930ab4148fb6b3889ba019934e10d4c0dad8f4cf619e3"
+    },
+    {
+      "path": "GLB/Models/UND-024_RoyalRevenant.glb",
+      "bytes": 291604,
+      "sha256": "c2d32e9b6a96b2518650cc06846bcc2db7bbf4acf62d71c24a36aa5d996fe2b5"
+    },
+    {
+      "path": "GLB/Models/UND-025_ExecutionerRevenant.glb",
+      "bytes": 285376,
+      "sha256": "29469f3ead9746513e60edc4d47d9ea22e46f1a20338aea83d2063e7dc3cb6c7"
+    },
+    {
+      "path": "GLB/Models/UND-026_WrappedMummy.glb",
+      "bytes": 398024,
+      "sha256": "d0b5f70944f48ce0516d257f5a46aa3d9b360f7b3d85611ab0ef5bb1a639d49d"
+    },
+    {
+      "path": "GLB/Models/UND-027_RoyalMummy.glb",
+      "bytes": 411532,
+      "sha256": "f5ff18592bf04d6b99f46ea7395e2ddf82c2515096bacce206db96f50d440206"
+    },
+    {
+      "path": "GLB/Models/UND-028_WarriorMummy.glb",
+      "bytes": 401776,
+      "sha256": "c07f156549d0db3a92df31a27e84a451132a8a4f425212b648a543e54df5430d"
+    },
+    {
+      "path": "GLB/Models/UND-029_BogMummy.glb",
+      "bytes": 407360,
+      "sha256": "299827d98923161364a1188024a66786c2c642c0b1a403ea1a3fe7102c99e906"
+    },
+    {
+      "path": "GLB/Models/UND-030_FrostMummy.glb",
+      "bytes": 407872,
+      "sha256": "04b5ee30c01f9cb55f8398bb390fc6a93b9442172f650d14d1187598cdfcd69e"
+    },
+    {
+      "path": "GLB/Models/UND-031_GraveGhoul.glb",
+      "bytes": 359576,
+      "sha256": "1d75cebc009e12da6945b6c1c6d5ac221f18b2a65b880c292725e23503b85dff"
+    },
+    {
+      "path": "GLB/Models/UND-032_CryptGhoul.glb",
+      "bytes": 364640,
+      "sha256": "687d938681afbe4a304e09f2af799f2cae369307b22f15945f614373367f6f9c"
+    },
+    {
+      "path": "GLB/Models/UND-033_BoneGhoul.glb",
+      "bytes": 340900,
+      "sha256": "345eff726bdd5a0b3da8c194621dfbf2cb377ea8b1503aa7c3863f5566af22e3"
+    },
+    {
+      "path": "GLB/Models/UND-034_StitchedBrute.glb",
+      "bytes": 287380,
+      "sha256": "d1e764ff0a3d300f5a397de4a2bc1cb02457b4860300135f57a2ade2854ee8f8"
+    },
+    {
+      "path": "GLB/Models/UND-035_PatchworkCrawler.glb",
+      "bytes": 292384,
+      "sha256": "faaf42c62c98c6ea76e7d2d862d9810872e64108325a2106789239be9b2c16ab"
+    },
+    {
+      "path": "GLB/Models/UND-036_HeadlessKnight.glb",
+      "bytes": 252884,
+      "sha256": "a70a2384426bc0b5800eee20f51c81c093eb7e488838a731c40fdf26d6584ab8"
+    },
+    {
+      "path": "GLB/Models/UND-037_SkeletalHound.glb",
+      "bytes": 432460,
+      "sha256": "a48993f9d0728948e08e04384479b194a81020fdd6cb5b19c031d1e8be4c4457"
+    },
+    {
+      "path": "GLB/Models/UND-038_SkeletalWolf.glb",
+      "bytes": 451352,
+      "sha256": "7789fc27a2b607daff10724b737285b4b2ae1d3d2a5f86b7f3ad4c3dfb13fb7c"
+    },
+    {
+      "path": "GLB/Models/UND-039_SkeletalHorse.glb",
+      "bytes": 405888,
+      "sha256": "6776c455f24e96dbe43551e63981d7121153d28dfbcbec99d777d8bc6bbbc15c"
+    },
+    {
+      "path": "GLB/Models/UND-040_SkeletalBoar.glb",
+      "bytes": 427664,
+      "sha256": "9c05c3c06cdbc8d68a4c176977e8e8280e8f63a7cd8a10c823be12a4a8822e62"
+    },
+    {
+      "path": "GLB/Models/UND-041_SkeletalBear.glb",
+      "bytes": 430176,
+      "sha256": "807c033e61d4a1fc8f1e234c1ea6b65e57adc998f3cede0e9fbb8a86b636a8c9"
+    },
+    {
+      "path": "GLB/Models/UND-042_ZombieHound.glb",
+      "bytes": 305156,
+      "sha256": "1a798965cb425b80f70a93075ba00cc41c6d377471f5cf588433e7e85bfbd6a2"
+    },
+    {
+      "path": "GLB/Models/UND-043_ZombieRat.glb",
+      "bytes": 323580,
+      "sha256": "cf16e6342c57e61d112d1bb2ed8cc5abf036b2520c67ca6cb2a24949a602a3f1"
+    },
+    {
+      "path": "GLB/Models/UND-044_ZombieRaven.glb",
+      "bytes": 245100,
+      "sha256": "50479cee6840812ec9b3402bad1bf96deda6321ebae33644a1dc325a3090d100"
+    },
+    {
+      "path": "GLB/Models/UND-045_BoneSpider.glb",
+      "bytes": 256012,
+      "sha256": "d8f3987c8214e62a087d5779d24ca44c7203b272f9cec8eafab00f0cd1fab52c"
+    },
+    {
+      "path": "GLB/Models/UND-046_BoneSerpent.glb",
+      "bytes": 380704,
+      "sha256": "64892a836408dae7c8210b6d30a4bb430914a498b44c3fb8b9d0ce5e99034871"
+    },
+    {
+      "path": "GLB/Models/UND-047_CryptWraith.glb",
+      "bytes": 272760,
+      "sha256": "4da607b565d1d29c7ca5499e8d8c101bd4e5741432dfd8257af640f22c2cb6f7"
+    },
+    {
+      "path": "GLB/Models/UND-048_LanternGhost.glb",
+      "bytes": 284048,
+      "sha256": "5e2f26db44f8fea4d6babde23f93f16ba2c4cdfefc0e2ddc5ef59ab40f22f839"
+    },
+    {
+      "path": "GLB/Models/UND-049_ChainSpecter.glb",
+      "bytes": 367904,
+      "sha256": "7d35e59a0ba0bff2b424fa54c1f44520f7ae85cb36a6c56a08c020ec413664e7"
+    },
+    {
+      "path": "GLB/Models/UND-050_ShroudedSpecter.glb",
+      "bytes": 244036,
+      "sha256": "e6894c9f1468bce74c050ba99c9c2567e9dd8f03934c6a782d4dbb3f502472f7"
+    },
+    {
+      "path": "LICENSE-README.txt",
+      "bytes": 208,
+      "sha256": "491dcd71bea120bbc1c5d7c7dac075c137cb43de9ab614ef6087ffb8ad9c9e87"
+    },
+    {
+      "path": "LICENSE.txt",
+      "bytes": 2754,
+      "sha256": "8b9a018b53f1a03b46e6697970cee7b56cbe19970160a35a79d4408bdef459cf"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 2518,
+      "sha256": "acffea2fb3b41266a9de0245a9788da0c037fd4bff87e4612d322155e45e1162"
+    },
+    {
+      "path": "Source/Models/UND-001_BareSkeleton.blend",
+      "bytes": 5792150,
+      "sha256": "9a60d0e769e808fe478d4c3fae923b00b9598c23de387d36b96b3a4eae5bdfc7"
+    },
+    {
+      "path": "Source/Models/UND-002_SkeletonWarrior.blend",
+      "bytes": 5862637,
+      "sha256": "96470507a28b8048bd49db6803f94b68e13c60a1a190675ae65c3b29a6482284"
+    },
+    {
+      "path": "Source/Models/UND-003_SkeletonArcher.blend",
+      "bytes": 5980868,
+      "sha256": "1ed5d72cac5d74ce61c78766c90d550cb01d057d566f6ba3c0fe70de9a748085"
+    },
+    {
+      "path": "Source/Models/UND-004_SkeletonSpearman.blend",
+      "bytes": 5912633,
+      "sha256": "ab936f393ad2c1e79ad6537e86de3be2dab1385fcc185c1732aa3606ee7efd22"
+    },
+    {
+      "path": "Source/Models/UND-005_SkeletonCaptain.blend",
+      "bytes": 5976892,
+      "sha256": "f385cd0cee3d4865129ed9ae9e082c15a71c9843f1263a64b88538e0b10bf41e"
+    },
+    {
+      "path": "Source/Models/UND-006_SkeletonMage.blend",
+      "bytes": 5943175,
+      "sha256": "73add6d492b8f4b2177320e92d1f1b2459459685548ff18fa8a2502573c9123c"
+    },
+    {
+      "path": "Source/Models/UND-007_SkeletonMiner.blend",
+      "bytes": 5922754,
+      "sha256": "9db95a8f87d4259284f573704c2af7c44b03aabd5145fd161dede6fb1fb1fc27"
+    },
+    {
+      "path": "Source/Models/UND-008_SkeletonSailor.blend",
+      "bytes": 5926614,
+      "sha256": "ccb5be15ef0a10e5481d8902a13a8dc91e44ec55d472f59bd1597a99521cb990"
+    },
+    {
+      "path": "Source/Models/UND-009_SkeletonExecutioner.blend",
+      "bytes": 5919444,
+      "sha256": "1a39c09373287e93f2681c88e40e0664a3c79d896a8414c2b51a22b7cfe4d0d1"
+    },
+    {
+      "path": "Source/Models/UND-010_SkeletonJester.blend",
+      "bytes": 5960385,
+      "sha256": "d02b7d3f383aa413ca0ddf6642853a4ed88e4425554c67eef97bf151a363bb73"
+    },
+    {
+      "path": "Source/Models/UND-011_BoneColossus.blend",
+      "bytes": 5913426,
+      "sha256": "d92fa1090a3b4ad0a7bea5011d9ca3f1f5700bf8b7eea60a111cf2a91d1d38ce"
+    },
+    {
+      "path": "Source/Models/UND-012_Four-ArmedBoneHorror.blend",
+      "bytes": 7274926,
+      "sha256": "ac5f27f30cac5f4c743d11ef3ef5f0750703dba74ce3ea97590c01863cf6d68e"
+    },
+    {
+      "path": "Source/Models/UND-013_GraveZombie.blend",
+      "bytes": 5576173,
+      "sha256": "8c58183d47029479b038297104f31ba9bd216fa66b333a170858d235f8907386"
+    },
+    {
+      "path": "Source/Models/UND-014_FarmerZombie.blend",
+      "bytes": 5597142,
+      "sha256": "e15de8f7d842af8849957e5c499cb59750dad8f6cd450817cbeb6c7f6cf7803e"
+    },
+    {
+      "path": "Source/Models/UND-015_GuardZombie.blend",
+      "bytes": 5613333,
+      "sha256": "f49199b13b804b27b66974433b0b00f2c1448013e6494173dd3120fd17611eb0"
+    },
+    {
+      "path": "Source/Models/UND-016_MinerZombie.blend",
+      "bytes": 5607201,
+      "sha256": "83f2f4254be5fa9dc195808c58e8c0764e796806056a75749dcdd5af59b58851"
+    },
+    {
+      "path": "Source/Models/UND-017_SailorZombie.blend",
+      "bytes": 5626639,
+      "sha256": "cdbd0bbd1bea0fb45c6a2a3ded55ef3201c1a2a43b655dce24e7f7a0ff0eac0c"
+    },
+    {
+      "path": "Source/Models/UND-018_PlagueZombie.blend",
+      "bytes": 5596723,
+      "sha256": "d35845b2772e21bfa3936dd5079f04a16e8a6b6e220d15fa56a4606f2d253866"
+    },
+    {
+      "path": "Source/Models/UND-019_FrostZombie.blend",
+      "bytes": 5613333,
+      "sha256": "38fdbf9ca4b1842fe14b4c993559f669b8de813eec71c8dd4faa7f952fe6f71e"
+    },
+    {
+      "path": "Source/Models/UND-020_CharredZombie.blend",
+      "bytes": 5606782,
+      "sha256": "6691d16d190bc2369083afc4432697875952290cf066291d391473ce6edbfa58"
+    },
+    {
+      "path": "Source/Models/UND-021_MireZombie.blend",
+      "bytes": 5613518,
+      "sha256": "175398b073479b53aa9b29688f6ec332ea07cd1c5ec069deb79683ee27c7627d"
+    },
+    {
+      "path": "Source/Models/UND-022_ArmoredRevenant.blend",
+      "bytes": 5606393,
+      "sha256": "f94fc2010a6a978c486b55389abb8fe4c03141fa5088c01f6e3e531a13a8d49e"
+    },
+    {
+      "path": "Source/Models/UND-023_GraveRevenant.blend",
+      "bytes": 5613080,
+      "sha256": "45776efde6c16d6aca2a0d555ed14f2b55d0387de928f9c87c8b0621382a3ff2"
+    },
+    {
+      "path": "Source/Models/UND-024_RoyalRevenant.blend",
+      "bytes": 5634066,
+      "sha256": "4707ba7e23b42597b0e09b9954241ef82dc19044f3bd17d15f302e7f325ce8d2"
+    },
+    {
+      "path": "Source/Models/UND-025_ExecutionerRevenant.blend",
+      "bytes": 5614190,
+      "sha256": "1d5667863b8866fcddfe264e81e5e578cf9b8f2027c4df0487c2383b63590382"
+    },
+    {
+      "path": "Source/Models/UND-026_WrappedMummy.blend",
+      "bytes": 5826373,
+      "sha256": "36c1760f42f2eb14095bb72993e0881dcf27b9967bca997692d8eeb442eab28f"
+    },
+    {
+      "path": "Source/Models/UND-027_RoyalMummy.blend",
+      "bytes": 5889743,
+      "sha256": "a6b108cbfef0e1004763c1c8b289bbdb87628bcfde68c3e98a52505b01f79e1c"
+    },
+    {
+      "path": "Source/Models/UND-028_WarriorMummy.blend",
+      "bytes": 5862995,
+      "sha256": "32eb7245a78fe847df479f0fc5a744544008e3b75d184463042494da0b0e24dd"
+    },
+    {
+      "path": "Source/Models/UND-029_BogMummy.blend",
+      "bytes": 5869682,
+      "sha256": "27179152626cb2c06927232c3482725c5ad25c721ea9104966f9eb1d42b2a4c6"
+    },
+    {
+      "path": "Source/Models/UND-030_FrostMummy.blend",
+      "bytes": 5876369,
+      "sha256": "6c8444dd4bb184ab742c35e4bf8cfdca39ca53915c7ae37decda7ee7ac8dcf39"
+    },
+    {
+      "path": "Source/Models/UND-031_GraveGhoul.blend",
+      "bytes": 5736841,
+      "sha256": "cc2340c331bff00d23d10698da0ac63435c294c15daaaee863c622dec4c68fc7"
+    },
+    {
+      "path": "Source/Models/UND-032_CryptGhoul.blend",
+      "bytes": 5730718,
+      "sha256": "c49f2c86c864e026f902f192334f2c255ce3f1cd92f8b45d5c3021799c193ef4"
+    },
+    {
+      "path": "Source/Models/UND-033_BoneGhoul.blend",
+      "bytes": 5689499,
+      "sha256": "96cd52939dd301a4d795206a839678da8f2a5ec2adb523c1b9528895b9572a1c"
+    },
+    {
+      "path": "Source/Models/UND-034_StitchedBrute.blend",
+      "bytes": 5620020,
+      "sha256": "2e6ccb59871c3d256ad121023645231ea579eebb2b08adf8460d8fe8aac4a2f2"
+    },
+    {
+      "path": "Source/Models/UND-035_PatchworkCrawler.blend",
+      "bytes": 5161693,
+      "sha256": "5f84a43b1d1b4d8b4ec9f1d4cb82337c0b33ebd7b1ae9f43a380215abb521413"
+    },
+    {
+      "path": "Source/Models/UND-036_HeadlessKnight.blend",
+      "bytes": 5557642,
+      "sha256": "f63ecb3fd6d9bd05b6978261f5ced045a78fb2a5f65710d24277d87193a43a4f"
+    },
+    {
+      "path": "Source/Models/UND-037_SkeletalHound.blend",
+      "bytes": 5403593,
+      "sha256": "9c38b5371476636d200477561657ed35967a26026b04803023c06aae2f1fb88b"
+    },
+    {
+      "path": "Source/Models/UND-038_SkeletalWolf.blend",
+      "bytes": 5457201,
+      "sha256": "c430e0578074f05e38785c4edb206633953bcad89fc7371d773799ecd97ee318"
+    },
+    {
+      "path": "Source/Models/UND-039_SkeletalHorse.blend",
+      "bytes": 5317947,
+      "sha256": "fb5e9e0b6211e73cb45c54c531f87a11a3edba6af0642b953fe11478680e3eb7"
+    },
+    {
+      "path": "Source/Models/UND-040_SkeletalBoar.blend",
+      "bytes": 5396827,
+      "sha256": "b21c69060d3e5370e10b70a67af0a8b9ff30087dc0651c283ed55a104439e78f"
+    },
+    {
+      "path": "Source/Models/UND-041_SkeletalBear.blend",
+      "bytes": 5403223,
+      "sha256": "0e17862145bc0f9d4470d7e73f0c11734ebc652ffef32ccc819bd13b743d385a"
+    },
+    {
+      "path": "Source/Models/UND-042_ZombieHound.blend",
+      "bytes": 5144830,
+      "sha256": "9b0fd88e9142350a2298366bab3f8b0277d40175a1b2e7bd99052855b30a2d47"
+    },
+    {
+      "path": "Source/Models/UND-043_ZombieRat.blend",
+      "bytes": 5198780,
+      "sha256": "901bdf95ef1a1f41953f7fd8916e43845034b92d4296335cef60834410b18983"
+    },
+    {
+      "path": "Source/Models/UND-044_ZombieRaven.blend",
+      "bytes": 6119402,
+      "sha256": "8b110f568b54f6d62f666a6813a38ce8125f4f87042c6ad43df351e8716ce18a"
+    },
+    {
+      "path": "Source/Models/UND-045_BoneSpider.blend",
+      "bytes": 4966311,
+      "sha256": "fb9c5bbee1cc6ef09fd6ce487ad65be8868a6b6ecb05e567525a60fbd0673221"
+    },
+    {
+      "path": "Source/Models/UND-046_BoneSerpent.blend",
+      "bytes": 4777823,
+      "sha256": "6c72cee47509c40dd99cee5981af1e9f509207ef411355e35121bdd4243cdde7"
+    },
+    {
+      "path": "Source/Models/UND-047_CryptWraith.blend",
+      "bytes": 5585802,
+      "sha256": "d1b31920bc72ec4c9b14a43311f826a4e8f142e89bdc1a86720b89fb1dbc77a5"
+    },
+    {
+      "path": "Source/Models/UND-048_LanternGhost.blend",
+      "bytes": 5672218,
+      "sha256": "816b4ec32649ac545fa772f8c7747a71fff22abc0339064437bb11f14faee9c0"
+    },
+    {
+      "path": "Source/Models/UND-049_ChainSpecter.blend",
+      "bytes": 5874348,
+      "sha256": "b1b6a0122edc5f0c2d0099576409b49ccc0c7e81cc037305f87843ab6f3269c0"
+    },
+    {
+      "path": "Source/Models/UND-050_ShroudedSpecter.blend",
+      "bytes": 5498124,
+      "sha256": "00c0ee65279f0bee6ee96e2902cdfd3c9d916f3681cdc515ebba98f321c8f2c4"
+    },
+    {
+      "path": "Third-Party Notices.txt",
+      "bytes": 313,
+      "sha256": "0301c4b93f2b8f0555fd6df8f6f045792d41e53340ff5f1b8ee09e6be4eaf946"
+    },
+    {
+      "path": "Unity/VoxelStarterKit_P16.unitypackage",
+      "bytes": 18785362,
+      "sha256": "1e51b30f21b665672268b5898a8121454aaf379721b7245791bd0996fb04eec8"
+    }
+  ]
+}
