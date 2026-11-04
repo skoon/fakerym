@@ -11,12 +11,25 @@ import { say, flashDamage } from '../ui/hud.js';
 // Three creatures with three silhouettes: a low wide crab, a low long hound, a tall hunched
 // kagouti. They differ in geometry, not just tint — that is the whole point of this file's shape.
 // `aim` is where a hit lands (a crab is knee-high, a kagouti is shoulder-height above you).
+//
+// Temperament is data too, and once you are near them it is the whole difference between the three:
+//   wake    how close you must be before it notices you at all
+//   leash   how far from its home it will pursue before giving up and walking back
+//   threat  the pause it spends sizing you up before committing, with a pose of its own
+//   pack    how many spawn together, sharing one home so they hunt as a litter
+//   harry   circles at reach instead of walking into your face
+// A mudcrab is territorial: it ignores you until 7 m, warns you, and never follows you more than
+// 14 m from where it was. A nix-hound hunts in pairs, sees you from 38 m and harries. A kagouti
+// sees you from 30 m, telegraphs, and follows you most of the way across the island.
 export const ENEMY_TYPES = [
-  { key: 'crab',    name: 'Mudcrab',   hp: 45,  dmg: 8,  speed: 4.8, xp: 25,  scale: 0.9, reach: 1.8, aim: 0.42, aggro: 34,
+  { key: 'crab',    name: 'Mudcrab',   hp: 45,  dmg: 8,  speed: 4.8, xp: 25,  scale: 0.9, reach: 1.8, aim: 0.42,
+    wake: 7,  leash: 14,  threat: 0.9, pack: 1,
     color: 0x6b5540, accent: 0x9a7346 },
-  { key: 'hound',   name: 'Nix-Hound', hp: 80,  dmg: 14, speed: 6.4, xp: 45,  scale: 1.0, reach: 2.4, aim: 0.75, aggro: 34,
+  { key: 'hound',   name: 'Nix-Hound', hp: 80,  dmg: 14, speed: 6.4, xp: 45,  scale: 1.0, reach: 2.4, aim: 0.75,
+    wake: 38, leash: 60,  threat: 0,   pack: 2, harry: true,
     color: 0x4f4a38, accent: 0x6f6750 },
-  { key: 'kagouti', name: 'Kagouti',   hp: 190, dmg: 26, speed: 4.2, xp: 110, scale: 1.0, reach: 3.0, aim: 1.5,  aggro: 26,
+  { key: 'kagouti', name: 'Kagouti',   hp: 190, dmg: 26, speed: 4.2, xp: 110, scale: 1.0, reach: 3.0, aim: 1.5,
+    wake: 30, leash: 120, threat: 0.6, pack: 1,
     color: 0x6b5a3e, accent: 0x3e3327 }
 ];
 export const enemies = [];
@@ -245,15 +258,23 @@ function releaseRig(rig) {
 }
 
 // ---------------------------------------------------------------- spawning
-export function spawnEnemy(near) {
-  const type = ENEMY_TYPES[Math.random() < 0.5 ? 0 : Math.random() < 0.72 ? 1 : 2];
-  const spot = findSpot(60, () => ringSpot(near, 55, 90), s => {
+function pickType() {
+  return ENEMY_TYPES[Math.random() < 0.5 ? 0 : Math.random() < 0.72 ? 1 : 2];
+}
+
+// far enough out that a creature is met while travelling, never in your face
+function farSpot(near) {
+  return findSpot(60, () => ringSpot(near, 55, 90), s => {
     if (Math.abs(s.x) > WORLD * 0.46 || Math.abs(s.z) > WORLD * 0.46) return false;
     const h = heightAt(s.x, s.z);
     return h >= WATER + 1 && slopeAt(s.x, s.z) <= 0.5;
   });
-  if (!spot) return;
+}
 
+// One creature at a spot. `home` is where its leash is measured from: the litter's spot when it
+// spawned as part of a pack, otherwise its own. findSpot hands back a scratch object, so home is
+// copied here rather than kept by reference.
+function placeEnemy(type, spot, home = spot) {
   const rig = acquireRig(type);
   const g = rig.group;
   g.position.set(spot.x, heightAt(spot.x, spot.z), spot.z);
@@ -266,16 +287,49 @@ export function spawnEnemy(near) {
   g.scale.setScalar(type.scale * jitter);
 
   enemies.push({
-    type, rig, mesh: g, hp: type.hp, maxHp: type.hp, state: 'wander',
-    dir: Math.random() * Math.PI * 2, timer: 0, atkCd: 0, dead: 0, flash: 0,
-    phase: Math.random() * 6.283
+    type, rig, mesh: g, home: new THREE.Vector3(home.x, 0, home.z),
+    hp: type.hp, maxHp: type.hp, state: 'wander',
+    dir: Math.random() * Math.PI * 2, timer: 0, atkCd: 0, alertT: 0, orbit: 0,
+    dead: 0, flash: 0, phase: Math.random() * 6.283
   });
+}
+
+// One creature, used by the death path and the 260 m cull: replacements arrive alone, so the
+// population can never grow.
+export function spawnEnemy(near) {
+  const type = pickType();
+  const spot = farSpot(near);
+  if (spot) placeEnemy(type, spot);
+}
+
+// The opening population, formed as litters so a nix-hound is met as a pair rather than alone.
+// `count` is a target for how many are alive; a litter can nudge the total past it, never far.
+// Litters are a spawn-time property — a slain hound comes back as a single creature — so a long
+// session drifts towards solos. Keeping packs together needs a real spawn manager.
+export function populateEnemies(near, count) {
+  while (enemies.length < count) {
+    const type = pickType();
+    const home = farSpot(near);
+    if (!home) return;
+    const packHome = new THREE.Vector3(home.x, 0, home.z);
+    placeEnemy(type, home, packHome);
+    for (let p = 1; p < type.pack; p++) {
+      const spot = findSpot(20, () => ringSpot(packHome, 2.5, 7), s =>
+        Math.abs(s.x) < WORLD * 0.46 && Math.abs(s.z) < WORLD * 0.46 &&
+        heightAt(s.x, s.z) >= WATER + 1 && slopeAt(s.x, s.z) <= 0.6);
+      if (spot) placeEnemy(type, spot, packHome);
+    }
+  }
 }
 
 export function damageEnemy(e, amount) {
   e.hp -= amount;
   e.flash = 0.16;
-  e.state = 'chase';
+  // a hit wakes anything, but a creature with a threat display warns before it commits
+  if (e.state === 'wander') {
+    if (e.type.threat > 0) { e.state = 'alert'; e.alertT = e.type.threat * 0.5; }
+    else beginChase(e);
+  }
   if (e.hp <= 0) {
     e.dead = 1;
     player.xp += e.type.xp;
@@ -299,6 +353,10 @@ function animate(e, dt, moving) {
     const amp = moving ? 0.4 : 0.06;
     L.arms[0].rotation.y = -0.5 + s * amp;
     L.arms[1].rotation.y = 0.5 - s * amp;
+    // claws up while it sizes you up: the only warning a mudcrab gives
+    const raised = e.state === 'alert' ? 1 : 0;
+    L.arms[0].rotation.x = -0.75 * raised;
+    L.arms[1].rotation.x = -0.75 * raised;
     for (let i = 0; i < L.legs.length; i++) {
       L.legs[i].rotation.z = CRAB_LEG_REST + Math.sin(e.phase + i * 1.7) * (moving ? 0.3 : 0.04);
     }
@@ -317,15 +375,24 @@ function animate(e, dt, moving) {
     return;
   }
 
+  // the crouch is a kagouti's charge telegraph, held for the length of its threat
+  const crouch = e.state === 'alert' ? 1 : 0;
   L.legs[0].rotation.x = Math.sin(e.phase) * (moving ? 0.5 : 0.03);
   L.legs[1].rotation.x = -Math.sin(e.phase) * (moving ? 0.5 : 0.03);
   L.arms[0].rotation.x = -Math.sin(e.phase) * (moving ? 0.42 : 0.06);
   L.arms[1].rotation.x = Math.sin(e.phase) * (moving ? 0.42 : 0.06);
-  L.body.position.y = 1.35 + Math.abs(s) * (moving ? 0.05 : 0.012);
-  L.head.rotation.x = -0.04 + Math.sin(e.phase * 0.5) * 0.07;
+  L.body.position.y = 1.35 + Math.abs(s) * (moving ? 0.05 : 0.012) - crouch * 0.1;
+  L.head.rotation.x = -0.04 + Math.sin(e.phase * 0.5) * 0.07 + crouch * 0.3;
 }
 
 // ---------------------------------------------------------------- per-frame
+// Committing starts the harrying circle on the bearing the creature already stands on, so it does
+// not snap to the far side of the player on the first frame.
+function beginChase(e) {
+  e.state = 'chase';
+  e.orbit = Math.atan2(e.mesh.position.x - player.pos.x, e.mesh.position.z - player.pos.z);
+}
+
 export function updateEnemies(dt) {
   for (let i = enemies.length - 1; i >= 0; i--) {
     const e = enemies[i];
@@ -361,23 +428,48 @@ export function updateEnemies(dt) {
     }
 
     e.timer -= dt; e.atkCd -= dt;
-    const aggro = e.type.aggro;
-    if (dist < aggro && player.hp > 0) e.state = 'chase';
-    else if (dist > aggro * 1.8) e.state = 'wander';
+
+    // Only a wandering creature can be woken, inside its own `wake`. Once committed it stays
+    // committed until it runs out of leash, which is what gives each type a different reach.
+    if (e.state === 'wander' && player.hp > 0 && dist < e.type.wake) {
+      if (e.type.threat > 0) { e.state = 'alert'; e.alertT = e.type.threat; }
+      else beginChase(e);
+    }
+
+    const hx = m.position.x - e.home.x, hz = m.position.z - e.home.z;
+    if (e.state === 'chase' && hx * hx + hz * hz > e.type.leash * e.type.leash) e.state = 'retreat';
 
     let speed = 0;
     if (e.state === 'chase') {
-      m.rotation.y = Math.atan2(toP.x, toP.z);
-      if (dist > e.type.reach) speed = e.type.speed;
-      else if (e.atkCd <= 0) {
+      if (dist <= e.type.reach && e.atkCd <= 0) {
         e.atkCd = 1.35;
         player.hp -= e.type.dmg * (1 - Math.min(0.4, player.level * 0.03));
         flashDamage();
         if (player.hp <= 0) {
           respawnPlayer();
-          for (const o of enemies) o.state = 'wander';
+          for (const o of enemies) { o.state = 'wander'; o.alertT = 0; }
         }
+      } else if (e.type.harry && dist < e.type.reach * 2.2) {
+        // harrying: circle just inside reach instead of walking into your face
+        e.orbit += dt * 1.2;
+        const r = e.type.reach * 0.85;
+        const dx = player.pos.x + Math.cos(e.orbit) * r - m.position.x;
+        const dz = player.pos.z + Math.sin(e.orbit) * r - m.position.z;
+        if (dx * dx + dz * dz > 0.09) { m.rotation.y = Math.atan2(dx, dz); speed = e.type.speed; }
+      } else if (dist > e.type.reach) {
+        m.rotation.y = Math.atan2(toP.x, toP.z);
+        speed = e.type.speed;
+      } else {
+        m.rotation.y = Math.atan2(toP.x, toP.z);
       }
+    } else if (e.state === 'alert') {
+      m.rotation.y = Math.atan2(toP.x, toP.z);
+      e.alertT -= dt;
+      if (e.alertT <= 0) beginChase(e);
+      else if (dist > e.type.wake * 1.6) e.state = 'wander';
+    } else if (e.state === 'retreat') {
+      if (hx * hx + hz * hz < 1.4) { e.state = 'wander'; e.timer = 0; }
+      else { m.rotation.y = Math.atan2(-hx, -hz); speed = e.type.speed * 0.75; }
     } else {
       if (e.timer <= 0) { e.timer = 2 + Math.random() * 4; e.dir += (Math.random() - 0.5) * 2.4; }
       m.rotation.y = e.dir;

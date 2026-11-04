@@ -11,7 +11,7 @@ import { buildFlora, canopyMesh } from './world/flora.js';
 import { buildGrass, syncGrass, applyDayNight as grassLight } from './world/grass.js';
 
 import { player, spawnPlayer, movePlayer, drinkPotion } from './game/player.js';
-import { enemies, spawnEnemy, updateEnemies, pickTarget, ENEMY_TYPES } from './game/enemies.js';
+import { enemies, populateEnemies, updateEnemies, pickTarget, ENEMY_TYPES } from './game/enemies.js';
 import { initContracts, updateContracts, interact as useBoard, waypointOf, contractView } from './game/contracts.js';
 import { buildViewmodel, startSwing, swordSwing, castFlame, initBolts, updateBolts } from './game/combat.js';
 import { initLoot, updateLoot } from './game/loot.js';
@@ -34,7 +34,7 @@ buildFlora();
 buildGrass(village);
 buildViewmodel();
 spawnPlayer(village);
-for (let i = 0; i < 26; i++) spawnEnemy(player.pos);
+populateEnemies(player.pos, 26);
 initLoot();
 initBolts();
 initContracts(village, {

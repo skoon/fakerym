@@ -104,7 +104,11 @@ actually being near the horizon, or night renders orange.
 First-person controller with damped acceleration, sprint on stamina, jump, swimming, head bob and
 sway, cylinder and box collision. Melee is a swing animation with a cone hit test; the flame spell
 is a gravity-affected bolt with a 5.5 m splash. Three creature types (Mudcrab, Nix-Hound, Kagouti)
-wander, aggro, chase and attack, culling and respawning around the player. Loot, gold, potions, XP
+wander, wake, size you up with a threat display, chase as far as a leash around their home, retreat
+and attack, culling and respawning around the player. Temperament is data on `ENEMY_TYPES`: the
+mudcrab is territorial (notices you at 7 m, never follows you more than 14 m from its home), the
+nix-hound spawns in pairs and harries you in circles, the kagouti telegraphs a crouch and follows
+you 120 m. Loot, gold, potions, XP
 and levelling (`xpNext × 1.45` per level, +12 max HP). HUD has health/stamina/magicka bars, a
 compass strip, a target readout and a message log.
 
