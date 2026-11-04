@@ -101,17 +101,20 @@ export function movePlayer(dt) {
     }
   }
 
-  // push out of walls: into box space, clamp to the nearest face, back to world
+  // Push out of walls: into box space, clamp to the nearest face, back to world. The box frame must
+  // be the mesh's own: a Y rotation of `yaw` sends local +x to (cos, -sin) and local +z to (sin, cos),
+  // so this is that rotation and its inverse. Getting the handedness wrong mirrors the box, which is
+  // invisible on a square footprint and a quarter turn off on a 90 degree yaw like a gate pier.
   for (const b of boxes) {
     const dx = player.pos.x - b.x, dz = player.pos.z - b.z;
     const cy = Math.cos(b.yaw), sy = Math.sin(b.yaw);
-    let lx = dx * cy + dz * sy, lz = -dx * sy + dz * cy;
+    let lx = dx * cy - dz * sy, lz = dx * sy + dz * cy;
     const ex = b.hx + 0.45, ez = b.hz + 0.45;
     if (Math.abs(lx) < ex && Math.abs(lz) < ez) {
       if (ex - Math.abs(lx) < ez - Math.abs(lz)) lx = Math.sign(lx || 1) * ex;
       else lz = Math.sign(lz || 1) * ez;
-      player.pos.x = b.x + lx * cy - lz * sy;
-      player.pos.z = b.z + lx * sy + lz * cy;
+      player.pos.x = b.x + lx * cy + lz * sy;
+      player.pos.z = b.z - lx * sy + lz * cy;
     }
   }
 

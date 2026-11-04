@@ -94,10 +94,16 @@ stepped gable ends turned to the street, shallow half-height gables with the rid
 street, roofs hipped at the alley ends with the kit's `roof-edge` tapers, a corner tower rising
 through the roof under a `tower-top` cap, and a flat `floor` slab ringed with `battlement`s.
 
-Every house stands on a 0.6 m grey plinth rather than sinking into the terrain, which puts the floor at
-the top of its stoop. The stoop is the kit's `floor-steps`: that piece is a wedge whose high edge is
-on its local +z, so it is turned to face the street and pushed back until that edge is flush with the
-front wall — the ramp then descends to the ground and the sill meets the top step.
+Every house stands on a 0.6 m stone plinth rather than sinking into the terrain, which puts the floor at
+the top of its stoop. The plinth and the stoop are box geometry tiled with the kit's own `stones`
+texture at the walls' 3 m tile scale, so they read as the same masonry, and both merge into one mesh:
+the whole town's base is a single draw call. The stoop is three treads, 1.8 m wide and 0.2 m per
+riser, with the top tread flush against the front wall and level with the door sill.
+
+Both ends of the street are closed by a run of the kit's wall modules carrying its `wall-gate` arch in
+the middle, so the vista stops at stone instead of empty grass. The arch is a real opening — 1.67 m
+wide and 2.3 m tall against a 0.45 m player radius — so the town stays walkable; only the gate's two
+piers collide.
 
 Street furniture is kit geometry too — barrels, crates, a barrel rack, brick piles and ladders against
 the front walls, and `fence-wood` runs behind both rows — all placed at the ground line rather than at
@@ -112,6 +118,8 @@ than as many draw calls. The site search and terracing are unchanged.
 
 Wall collision is rotated-AABB push-out, and each box is the house's own footprint plus 2 cm — the
 walls are flush with the module grid, so a larger margin reads as an invisible wall you stop short of.
+The box frame has to be the mesh's own Y rotation and not its mirror: a mirrored frame is invisible on
+a square footprint, but a gate pier at a 90 degree yaw comes out a quarter turn off and seals the arch.
 
 The site is chosen by sampling slope and height on two rings and keeping the flattest dry candidate,
 then `flattenDisc` levels it with a feathered rim. Wall collision is rotated-AABB push-out: transform

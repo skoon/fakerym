@@ -34,11 +34,12 @@ export let street = 0;
 const lanterns = [];
 const lampHeads = [];
 const KIT_DIR = new URL('../models/Retro Fantasy Kit/Models/GLB format/', import.meta.url).href;
-const KIT_PIECES = ['wall', 'wall-paint', 'wall-window', 'wall-door', 'roof', 'roof-side',
+const KIT_PIECES = ['wall', 'wall-gate', 'wall-paint', 'wall-window', 'wall-door', 'roof', 'roof-side',
   'roof-edge', 'battlement', 'floor', 'tower-top', 'column-wood', 'fence-wood',
-  'floor-steps', 'detail-barrel', 'detail-crate', 'detail-crate-small', 'bricks', 'ladder', 'barrels'];
+  'detail-barrel', 'detail-crate', 'detail-crate-small', 'bricks', 'ladder', 'barrels'];
 const PIECES = new Map();      // name -> [{ geometry, matrix, matKey }]
 const MATERIALS = new Map();   // material name -> THREE material, one per kit texture
+let STONE_KEY = null;          // the wall's stone material, reused by the plinths and stoops
 const UP = new THREE.Vector3(0, 1, 0);
 const ONE = new THREE.Vector3(1, 1, 1);
 
@@ -99,6 +100,10 @@ async function loadKit() {
         parts.push({ geo, matrix: o.matrixWorld.clone(), matKey: key });
       });
       PIECES.set(name, parts);
+      if (name === 'wall' && !STONE_KEY) {
+        const keys = parts.map(p => p.matKey);
+        STONE_KEY = keys.find(k => /stone/i.test(k)) || keys[0];
+      }
     } catch (err) {
       console.error(`[village] kit piece ${name} failed to load`, err);
     }
@@ -136,6 +141,35 @@ function emit(out, name, worldMatrix) {
     if (!list) { list = []; out.set(part.matKey, list); }
     list.push(geo);
   }
+}
+
+// ---------------------------------------------------------------- masonry
+// A box whose UVs repeat one kit texture tile per module, so a 9 m plinth and a 1.8 m tread show the
+// same stone courses as the walls standing on them.
+function stoneBox(sx, sy, sz) {
+  const geo = new THREE.BoxGeometry(sx, sy, sz);
+  const uv = geo.attributes.uv;
+  const per = 1 / MODULE;
+  // BoxGeometry packs four vertices per face, in the order +x, -x, +y, -y, +z, -z
+  const faces = [[sz, sy], [sz, sy], [sx, sz], [sx, sz], [sx, sy], [sx, sy]];
+  for (let f = 0; f < 6; f++) {
+    for (let v = 0; v < 4; v++) {
+      const i = f * 4 + v;
+      uv.setXY(i, uv.getX(i) * faces[f][0] * per, uv.getY(i) * faces[f][1] * per);
+    }
+  }
+  uv.needsUpdate = true;
+  return geo;
+}
+
+// One material for the plinths and the stoops, so the town's masonry base is a single mesh.
+function stoneMaterial() {
+  const src = STONE_KEY && MATERIALS.get(STONE_KEY);
+  if (!src || !src.map) return new THREE.MeshLambertMaterial({ color: 0x8d8879 });
+  const map = src.map.clone();
+  map.wrapS = map.wrapT = THREE.RepeatWrapping;
+  map.needsUpdate = true;
+  return new THREE.MeshLambertMaterial({ map });
 }
 
 // ---------------------------------------------------------------- house plans
@@ -266,7 +300,8 @@ export async function buildVillage() {
   street = Math.random() * Math.PI * 2;
   const ca = Math.cos(street), sa = Math.sin(street);
 
-  const plinths = [];
+  const masonry = [];
+  let maxReach = 0;                // how far down the street the rows reach, for the end walls
   for (let i = 0; i < PER_SIDE * 2; i++) {
     const plan = PLANS[i % PLANS.length];
     const side = i < PER_SIDE ? 1 : -1;
@@ -303,30 +338,56 @@ export async function buildVillage() {
       const dx = Math.sin(yaw), dz = Math.cos(yaw);     // the house's own +z, in world space
       const groundFront = heightAt(x + dx * hz, z + dz * hz);
       dressHouse(buckets, M, plan, i, (groundFront - baseY) / MODULE);
+      maxReach = Math.max(maxReach, Math.abs(along) + hx);
 
       // the plinth is buried half a metre under the lowest corner, so it never floats on a slope.
       // Built in world metres: houseMatrix carries the kit's MODULE scale and would triple it.
       const plinthH = baseY - (lo - 0.5);
-      plinths.push(new THREE.BoxGeometry(hx * 2 + 0.08, plinthH, hz * 2 + 0.08)
+      masonry.push(stoneBox(hx * 2 + 0.08, plinthH, hz * 2 + 0.08)
         .applyMatrix4(new THREE.Matrix4().compose(
           new THREE.Vector3(x, lo - 0.5 + plinthH / 2, z),
           new THREE.Quaternion().setFromAxisAngle(UP, yaw), ONE)));
 
-      // The stoop: the kit's floor-steps is a wedge that ramps up towards local +z, so it is turned
-      // to face the street and pushed back until its high edge is flush with the front wall.
-      const sz = 0.5, sx = 0.62;
-      const stepOff = hz + sz * MODULE * 0.5;
-      const stepX = x + dx * stepOff, stepZ = z + dz * stepOff;
-      const stepBottom = Math.min(lo, heightAt(stepX, stepZ)) - 0.05;
-      // emit() places kit geometry in module units, so the scale has to carry MODULE as well
-      emit(buckets, 'floor-steps', new THREE.Matrix4().compose(
-        new THREE.Vector3(stepX, stepBottom, stepZ),
-        new THREE.Quaternion().setFromAxisAngle(UP, yaw + Math.PI),
-        new THREE.Vector3(sx * MODULE, ((baseY - stepBottom) / STEP_H) * MODULE, sz * MODULE)));
+      // The stoop: three stone treads up to the sill. Each higher tread runs less far out from the
+      // wall, so the stack reads as steps rather than the kit's floor-steps wedge, and the top tread
+      // is flush against the front wall at the door sill.
+      const doorX = x + dx * hz, doorZ = z + dz * hz;
+      const stepBottom = Math.min(lo, heightAt(doorX, doorZ)) - 0.05;
+      const rise = (baseY - stepBottom) / 3, tread = 0.42, wide = 1.8;
+      for (let k = 0; k < 3; k++) {
+        const depth = (3 - k) * tread;
+        const h = (k + 1) * rise;
+        masonry.push(stoneBox(wide, h, depth).applyMatrix4(new THREE.Matrix4().compose(
+          new THREE.Vector3(doorX + dx * (depth / 2), stepBottom + h / 2, doorZ + dz * (depth / 2)),
+          new THREE.Quaternion().setFromAxisAngle(UP, yaw), ONE)));
+      }
       // the collision box is this house's own footprint: walls are flush with the module grid, so
       // anything more than a centimetre of padding reads as an invisible wall you stop short of
       boxes.push({ x, z, yaw, hx: hx + 0.02, hz: hz + 0.02 });
       break;
+    }
+  }
+
+  // Close both ends of the street with a run of wall modules carrying the kit's gate arch in the
+  // middle, so the vista stops at stone. The arch is a real opening, so the town is still walkable.
+  const endAlong = maxReach + 2.5;
+  const endYaw = Math.atan2(ca, sa);      // local +z runs down the street: the arch opens along it
+  for (const sign of [1, -1]) {
+    for (let k = -3; k <= 3; k++) {
+      const off = k * MODULE;
+      const x = village.cx + ca * sign * endAlong - sa * off;
+      const z = village.cz + sa * sign * endAlong + ca * off;
+      const M = new THREE.Matrix4().compose(new THREE.Vector3(x, heightAt(x, z), z),
+        new THREE.Quaternion().setFromAxisAngle(UP, endYaw), new THREE.Vector3(MODULE, MODULE, MODULE));
+      emit(buckets, k === 0 ? 'wall-gate' : 'wall', M);
+      if (k === 0) {
+        // only the piers either side of the arch collide, so the 1.67 m opening stays walkable
+        for (const s of [-1, 1]) {
+          boxes.push({ x: x + s * 1.165 * sa, z: z - s * 1.165 * ca, yaw: endYaw, hx: 0.33, hz: 1.5 });
+        }
+      } else {
+        boxes.push({ x, z, yaw: endYaw, hx: 1.5, hz: 1.5 });
+      }
     }
   }
 
@@ -364,9 +425,8 @@ export async function buildVillage() {
     scene.add(new THREE.Mesh(merged, MATERIALS.get(key) || MATERIALS.values().next().value));
   }
 
-  // one grey plinth mesh for the whole town: the houses are lifted a step-height off the ground
-  scene.add(new THREE.Mesh(mergeGeometries(plinths, false),
-    new THREE.MeshLambertMaterial({ color: 0x8d8879 })));
+  // one stone mesh for the whole town's masonry: every plinth and every stoop, a single draw call
+  if (masonry.length) scene.add(new THREE.Mesh(mergeGeometries(masonry, false), stoneMaterial()));
 
   const headGeo = new THREE.BoxGeometry(0.34, 0.42, 0.34);
   const headMat = new THREE.MeshLambertMaterial({ color: 0xffd7a0, emissive: 0xffb26b, emissiveIntensity: 0 });
